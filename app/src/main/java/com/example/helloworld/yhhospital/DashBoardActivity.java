@@ -4,8 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -21,60 +24,57 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DashBoardActivity extends AppCompatActivity{
-    TextView textView1;
+    TextView textView1,textView2,textView3;
     final String name = "keb";
-    Button btn_dash1,btn_dash2,btn_dash3,btn_dash4;
     SharedPreferences pref;
     SharedPreferences.Editor editor;
+    BottomNavigationView nav;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
         Bundle bundle = getIntent().getExtras();
-        textView1 = findViewById(R.id.show_employee);
 
         String idCard = bundle.getString("idCard");
         String csNo = bundle.getString("csNo");
         postDashBoard(idCard,csNo);
 
+        //getActionBar().setHomeButtonEnabled(true);
+
+
+        textView1 = findViewById(R.id.show_employee);
+        textView2 = findViewById(R.id.show_employee2);
+        textView3 = findViewById(R.id.show_employee3);
+        nav = findViewById(R.id.bottom_nav_view);
         pref = getSharedPreferences(name, Context.MODE_PRIVATE);
         editor = pref.edit();
         editor.putString("emp_id",idCard);
         editor.commit();
-        btn_dash1=(Button)findViewById(R.id.btn_dash1);
-        btn_dash1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent inform = new Intent(DashBoardActivity.this, InformationActivity.class);
-                startActivity(inform);
-            }
-        });
-        btn_dash2=(Button)findViewById(R.id.btn_dash2);
-        btn_dash2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent inform = new Intent(DashBoardActivity.this, PersonalActivity.class);
-                startActivity(inform);
-            }
-        });
-        btn_dash3=(Button)findViewById(R.id.btn_dash3);
-        btn_dash3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent inform = new Intent(DashBoardActivity.this, FamilyActivity.class);
-                startActivity(inform);
-            }
-        });
-        btn_dash4=(Button)findViewById(R.id.btn_dash4);
-        btn_dash4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Intent inform = new Intent(DashBoardActivity.this, PEActivity.class);
-//                startActivity(inform);
-            }
-        });
 
-
+        nav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.item_1:
+                        Intent inform1 = new Intent(DashBoardActivity.this, InformationActivity.class);
+                        startActivity(inform1);
+                        return true;
+                    case R.id.item_2:
+                        Intent inform2 = new Intent(DashBoardActivity.this, PersonalActivity.class);
+                        startActivity(inform2);
+                        return true;
+                    case R.id.item_3:
+                        Intent inform3 = new Intent(DashBoardActivity.this, FamilyActivity.class);
+                        startActivity(inform3);
+                        return true;
+                    case R.id.item_4:
+                        Intent inform4 = new Intent(DashBoardActivity.this, PEActivity.class);
+                        startActivity(inform4);
+                        return true;
+                }
+                return false;
+            }
+        });
     }
 
     public void postDashBoard(final String idCard,final String csNo) {
@@ -84,13 +84,13 @@ public class DashBoardActivity extends AppCompatActivity{
                     @Override
                     public void onResponse(String response) {
                         String[] response2 = response.split(" ");
-                        textView1.setText(response2[0]+" "+response2[1]+" "+response2[2]+" "
-                                +response2[3]+" "+response2[4]+" "+response2[5]+" "+response2[6]
-                                +" "+response2[7]+response2[8]+" "+response2[9]+" "+response2[10]
-                                +" "+response2[11]);
+                        textView1.setText(String.valueOf(response2[0]+" "+response2[1]+" "+response2[2]+" " +response2[3]+" "+response2[4]));
+                        textView2.setText(String.valueOf(response2[5]+" "+response2[6] +" "+response2[7]+response2[8]+" "+response2[9]));
+                        textView3.setText(String.valueOf(response2[10]+" "+response2[11]));
                         pref = getSharedPreferences(name, Context.MODE_PRIVATE);
+                        Log.i("abs",response2[12]);
                         editor = pref.edit();
-                        editor.putString("csd_no",response2[12]);
+                        editor.putString("csd_no", response2[12]);
                         editor.commit();
                         Log.i("res", response);
                     }

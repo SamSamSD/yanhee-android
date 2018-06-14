@@ -4,8 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -29,6 +32,7 @@ public class PersonalActivity extends AppCompatActivity {
     CheckBox cb10,cb11,cb20,cb21,cb30,cb31,cb40,cb41,cb50,cb51,cb60,cb61,cb70,cb71;
     Button submit_ps;
     String[] ps_checked = new String[]{"0","0","0","0","0","0","0"};
+    BottomNavigationView nav;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +53,30 @@ public class PersonalActivity extends AppCompatActivity {
         cb71 = findViewById(R.id.cb71);
         submit_ps = findViewById(R.id.submit_ps);
 
+        nav = findViewById(R.id.bottom_nav_view);
+        nav.setSelectedItemId(R.id.item_2);
+        nav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.item_2:
+                        return true;
+                    case R.id.item_1:
+                        Intent inform2 = new Intent(PersonalActivity.this, InformationActivity.class);
+                        startActivity(inform2);
+                        return true;
+                    case R.id.item_3:
+                        Intent inform3 = new Intent(PersonalActivity.this, FamilyActivity.class);
+                        startActivity(inform3);
+                        return true;
+                    case R.id.item_4:
+                        Intent inform4 = new Intent(PersonalActivity.this, PEActivity.class);
+                        startActivity(inform4);
+                        return true;
+                }
+                return false;
+            }
+        });
         handleButton();
 
 

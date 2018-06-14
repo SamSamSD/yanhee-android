@@ -4,8 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,7 +30,7 @@ public class InformationActivity extends AppCompatActivity {
     TextView textWeight,textHeight,textBp,textBp2;
     EditText edittextWeight,edittextHeight,edittextBp,edittextBp2;
     Button btn_submit_info;
-
+    BottomNavigationView nav;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +39,7 @@ public class InformationActivity extends AppCompatActivity {
         pref = getSharedPreferences(name, Context.MODE_PRIVATE);
         final String csd_no = pref.getString("csd_no","");
         final String emp_id = pref.getString("emp_id","");
+
 
         textWeight = findViewById(R.id.textWeight);
         textHeight = findViewById(R.id.textHeight);
@@ -54,7 +58,30 @@ public class InformationActivity extends AppCompatActivity {
                 postInfo(emp_id, csd_no);
             }
         });
-
+        nav = findViewById(R.id.bottom_nav_view);
+        nav.setSelectedItemId(R.id.item_1);
+        nav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.item_1:
+                        return true;
+                    case R.id.item_2:
+                        Intent inform2 = new Intent(InformationActivity.this, PersonalActivity.class);
+                        startActivity(inform2);
+                        return true;
+                    case R.id.item_3:
+                        Intent inform3 = new Intent(InformationActivity.this, FamilyActivity.class);
+                        startActivity(inform3);
+                        return true;
+                    case R.id.item_4:
+                        Intent inform4 = new Intent(InformationActivity.this, PEActivity.class);
+                        startActivity(inform4);
+                        return true;
+                }
+                return false;
+            }
+        });
     }
     public void postInfo(final String emp_id,final String csd_no) {
         String checkIdUrl = MainActivity.url+"app_info.php";

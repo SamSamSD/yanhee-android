@@ -2,11 +2,14 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:background="#F5F5F5"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -17,76 +20,86 @@
             android:paddingLeft="24dp"
             android:paddingRight="24dp">
 
-
-            <Button
-                android:id="@+id/btn_dash1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="ข้อมูลเบื้องต้น"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/btn_dash2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="ประวัติส่วนตัว"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/btn_dash3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="ประวัติครอบครัว"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/btn_dash4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="ตรวจร่างกาย"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/btn_dash5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="1"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/btn_dash6"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="2"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/btn_dash7"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="3"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/btn_dash8"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="4"
-                android:textStyle="bold" />
-
-
-
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/show_employee"
-            android:layout_width="284dp"
-            android:layout_height="31dp"
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@drawable/back">
+
+            <TextView
+                android:id="@+id/show_employee"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:text="TextView"/>
+
+            <TextView
+                android:id="@+id/show_employee2"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:text="TextView"
+                app:layout_constraintTop_toBottomOf="@+id/show_employee"/>
+
+            <TextView
+                android:id="@+id/show_employee3"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:text="TextView"
+                app:layout_constraintTop_toBottomOf="@+id/show_employee2"/>
+
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.design.widget.BottomNavigationView
+            android:id="@+id/bottom_nav_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorPrimary"
+            app:itemTextColor="@color/colorWhite"
+            app:itemIconTint="@color/colorOrange"
+            app:menu="@menu/nav"/>
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="124dp"
+            android:layout_height="79dp"
+            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="31dp"
-            android:text="TextView" />
+            android:layout_marginStart="49dp"
+            android:layout_marginTop="154dp"
+            android:text="Button" />
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="120dp"
+            android:layout_height="78dp"
+            android:layout_alignBottom="@+id/button2"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="47dp"
+            android:text="Button" />
+
+        <Button
+            android:id="@+id/button4"
+            android:layout_width="122dp"
+            android:layout_height="79dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/button2"
+            android:layout_marginBottom="145dp"
+            android:text="Button" />
+
+        <Button
+            android:id="@+id/button5"
+            android:layout_width="118dp"
+            android:layout_height="77dp"
+            android:layout_alignEnd="@+id/button3"
+            android:layout_alignTop="@+id/button4"
+            android:text="Button" />
 
     </RelativeLayout>
-
 </ScrollView>
