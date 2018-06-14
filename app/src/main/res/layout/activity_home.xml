@@ -1,25 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
+    android:background="#F5F5F5"
     android:layout_centerInParent="true"
     android:orientation="vertical"
-    android:paddingLeft="24dp"
-    android:paddingRight="24dp">
+    android:paddingTop="36dp"
+    android:paddingLeft="12dp"
+    android:paddingRight="12dp">
+
+
 
     <LinearLayout
-        android:layout_width="match_parent"
         android:id="@+id/linearLayout2"
-        android:layout_height="wrap_content">
-
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/back"
+        />
 
     <Button
         android:id="@+id/scan"
-        android:layout_width="match_parent"
+        android:layout_width="351dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="300dp"
         android:background="@color/colorPrimary"
         android:onClick="handleScan"
-        android:text="scan QR code" />
-    </LinearLayout>
+        android:text="scan QR code"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
-</LinearLayout>
+
+
+
+</android.support.constraint.ConstraintLayout>

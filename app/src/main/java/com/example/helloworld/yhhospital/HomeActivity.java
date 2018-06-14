@@ -1,6 +1,7 @@
 package com.example.helloworld.yhhospital;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.Constraints;
@@ -13,6 +14,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -21,6 +23,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -80,6 +83,11 @@ public class HomeActivity extends AppCompatActivity implements ZXingScannerView.
                     @Override
                     public void onResponse(String response) {
                         final String[] places = response.split(" ");
+                        TextView tv = new TextView(getApplicationContext());
+                        tv.setTypeface(null, Typeface.BOLD);
+                        tv.setTextSize(20);
+                        tv.setText("เลือกสถานที่ตรวจ");
+                        linearLayout.addView(tv);
                         for(int i = 1; i<places.length; i+=2){
                             final CheckBox button = new CheckBox(getApplicationContext());
                             button.setId(i-1);
