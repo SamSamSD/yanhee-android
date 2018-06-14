@@ -84,10 +84,13 @@ public class DashBoardActivity extends AppCompatActivity{
                     @Override
                     public void onResponse(String response) {
                         String[] response2 = response.split(" ");
-                        textView1.setText(response2[0]+" "+response2[1]+" "+response2[2]+" "+response2[3]+" "+response2[4]+" "+response2[5]+" "+response2[6]+" "+response2[7]);
+                        textView1.setText(response2[0]+" "+response2[1]+" "+response2[2]+" "
+                                +response2[3]+" "+response2[4]+" "+response2[5]+" "+response2[6]
+                                +" "+response2[7]+response2[8]+" "+response2[9]+" "+response2[10]
+                                +" "+response2[11]);
                         pref = getSharedPreferences(name, Context.MODE_PRIVATE);
                         editor = pref.edit();
-                        editor.putString("csd_no",response2[8]);
+                        editor.putString("csd_no",response2[12]);
                         editor.commit();
                         Log.i("res", response);
                     }
