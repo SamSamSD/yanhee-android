@@ -20,7 +20,7 @@ import java.util.Map;
 
 
 public class MainActivity extends AppCompatActivity {
-    public static String url = "http://192.168.43.170/YH_project";
+    public static String url = "http://192.168.43.170/YH_project/";
 
     EditText editPassword, editName;
     Button btnSignIn;
@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void postLogin() {
-        String x = url+"/app_login.php";
+        String x = url+"app_login.php";
         StringRequest postRequest = new StringRequest(Request.Method.POST, x,
                 new Response.Listener<String>() {
                     @Override
