@@ -20,7 +20,7 @@ import java.util.Map;
 
 
 public class MainActivity extends AppCompatActivity {
-    public static String url = "http://192.168.43.170/YH_project/";
+    public static String url = "http://172.22.0.186/YH_project/";
 
     EditText editPassword, editName;
     Button btnSignIn;

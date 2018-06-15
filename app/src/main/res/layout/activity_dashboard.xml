@@ -73,7 +73,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginStart="49dp"
             android:layout_marginTop="154dp"
-            android:text="Button" />
+            android:text="X-RAY" />
 
         <Button
             android:id="@+id/button3"
@@ -82,7 +82,7 @@
             android:layout_alignBottom="@+id/button2"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="47dp"
-            android:text="Button" />
+            android:text="ตรวจเลือด" />
 
         <Button
             android:id="@+id/button4"

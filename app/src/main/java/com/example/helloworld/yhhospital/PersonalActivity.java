@@ -59,6 +59,10 @@ public class PersonalActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
+                    case R.id.item_0:
+                        Intent inform0 = new Intent(PersonalActivity.this, DashBoardActivity.class);
+                        startActivity(inform0);
+                        return true;
                     case R.id.item_2:
                         return true;
                     case R.id.item_1:

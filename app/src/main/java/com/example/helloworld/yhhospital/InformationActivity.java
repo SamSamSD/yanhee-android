@@ -64,6 +64,10 @@ public class InformationActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
+                    case R.id.item_0:
+                        Intent inform0 = new Intent(InformationActivity.this, DashBoardActivity.class);
+                        startActivity(inform0);
+                        return true;
                     case R.id.item_1:
                         return true;
                     case R.id.item_2:

@@ -41,7 +41,10 @@ public class FamilyActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
-
+                    case R.id.item_0:
+                        Intent inform0 = new Intent(FamilyActivity.this, DashBoardActivity.class);
+                        startActivity(inform0);
+                        return true;
                     case R.id.item_1:
                         Intent inform2 = new Intent(FamilyActivity.this, InformationActivity.class);
                         startActivity(inform2);

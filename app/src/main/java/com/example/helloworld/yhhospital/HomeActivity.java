@@ -1,6 +1,8 @@
 package com.example.helloworld.yhhospital;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
@@ -36,6 +38,8 @@ public class HomeActivity extends AppCompatActivity implements ZXingScannerView.
     LinearLayout linearLayout;
     private ZXingScannerView zXingScannerView;
     boolean status = false;
+    SharedPreferences pref;
+    SharedPreferences.Editor editor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -143,9 +147,12 @@ public class HomeActivity extends AppCompatActivity implements ZXingScannerView.
                     @Override
                     public void onResponse(String response) {
                         if(response.equals("true")) {
+                            pref = getSharedPreferences("keb", Context.MODE_PRIVATE);
+                            editor = pref.edit();
+                            editor.putString("idCard", idCard);
+                            editor.putString("csNo", checkedNo);
+                            editor.commit();
                             Intent home = new Intent(HomeActivity.this, DashBoardActivity.class);
-                            home.putExtra("idCard", idCard);
-                            home.putExtra("csNo", checkedNo);
                             startActivity(home);
                         } else{
                             Toast.makeText(HomeActivity.this, "อย่าสแกนเล่นสิจ๊ะ", Toast.LENGTH_SHORT).show();

@@ -25,6 +25,7 @@ import java.util.Map;
 
 public class DashBoardActivity extends AppCompatActivity{
     TextView textView1,textView2,textView3;
+    Button b1,b2,b3,b4;
     final String name = "keb";
     SharedPreferences pref;
     SharedPreferences.Editor editor;
@@ -33,28 +34,56 @@ public class DashBoardActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-        Bundle bundle = getIntent().getExtras();
+        pref = getSharedPreferences(name, Context.MODE_PRIVATE);
+        editor = pref.edit();
 
-        String idCard = bundle.getString("idCard");
-        String csNo = bundle.getString("csNo");
+        final String idCard = pref.getString("idCard","");
+        final String csNo = pref.getString("csNo","");
         postDashBoard(idCard,csNo);
-
-        //getActionBar().setHomeButtonEnabled(true);
-
 
         textView1 = findViewById(R.id.show_employee);
         textView2 = findViewById(R.id.show_employee2);
         textView3 = findViewById(R.id.show_employee3);
         nav = findViewById(R.id.bottom_nav_view);
-        pref = getSharedPreferences(name, Context.MODE_PRIVATE);
-        editor = pref.edit();
-        editor.putString("emp_id",idCard);
-        editor.commit();
+        b1 = findViewById(R.id.button2);
+        b2 = findViewById(R.id.button3);
+        b3 = findViewById(R.id.button4);
+        b4 = findViewById(R.id.button5);
 
+        b1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                postCL(idCard,"1");
+            }
+        });
+        b2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                postCL(idCard,"2");
+            }
+        });
+        b3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                postCL(idCard,"3");
+            }
+        });
+        b4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                postCL(idCard,"4");
+            }
+        });
+
+        nav.setSelectedItemId(R.id.item_0);
         nav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
+                    case R.id.item_0:
+                        Intent inform12= new Intent(DashBoardActivity.this, DashBoardActivity.class);
+                        startActivity(inform12);
+                        return true;
                     case R.id.item_1:
                         Intent inform1 = new Intent(DashBoardActivity.this, InformationActivity.class);
                         startActivity(inform1);
@@ -86,13 +115,12 @@ public class DashBoardActivity extends AppCompatActivity{
                         String[] response2 = response.split(" ");
                         textView1.setText(String.valueOf(response2[0]+" "+response2[1]+" "+response2[2]+" " +response2[3]+" "+response2[4]));
                         textView2.setText(String.valueOf(response2[5]+" "+response2[6] +" "+response2[7]+response2[8]+" "+response2[9]));
-                        textView3.setText(String.valueOf(response2[10]+" "+response2[11]));
+                        textView3.setText(String.valueOf(response2[10]+" "+response2[11]+" "+ response2[12]));
                         pref = getSharedPreferences(name, Context.MODE_PRIVATE);
-                        Log.i("abs",response2[12]);
                         editor = pref.edit();
-                        editor.putString("csd_no", response2[12]);
+                        editor.putString("csd_no", response2[13]);
                         editor.commit();
-                        Log.i("res", response);
+                        Log.i("res", pref.getString("csd_no", ""));
                     }
                 },
                 new Response.ErrorListener() {
@@ -121,6 +149,46 @@ public class DashBoardActivity extends AppCompatActivity{
         Volley.newRequestQueue(this).add(postRequest);
     }
 
+    public void postCL(final String idCard, final String btn) {
+        String checkIdUrl = MainActivity.url+"app_check_list.php";
+        pref = getSharedPreferences(name, Context.MODE_PRIVATE);
+        editor = pref.edit();
+
+        final String csd_no_get = pref.getString("csd_no","");
+        StringRequest postRequest = new StringRequest(Request.Method.POST, checkIdUrl,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.i("cl",response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError err) {
+                        Log.d("Error.Response", err.getMessage());
+                    }
+                }
+        ) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("idCard", idCard);
+                params.put("csd_no", csd_no_get);
+                params.put("case", btn);
+                Log.i("xx",params.toString());
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String,String> params = new HashMap<>();
+                params.put("Content-Type","application/x-www-form-urlencoded");
+                return params;
+            }
+        };
+        Volley.newRequestQueue(this).add(postRequest);
+    }
 
 
 }
