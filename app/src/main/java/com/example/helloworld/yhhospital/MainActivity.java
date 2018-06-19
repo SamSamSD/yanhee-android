@@ -20,7 +20,7 @@ import java.util.Map;
 
 
 public class MainActivity extends AppCompatActivity {
-    public static String url = "http://172.22.0.186/YH_project/";
+    public static String url = "http://172.22.1.163/YH_project/";
 
     EditText editPassword, editName;
     Button btnSignIn;
@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("www","app");
                 postLogin();
             }
         });
@@ -52,7 +51,9 @@ public class MainActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        if(response.equals("true")) {
+                        Log.i("login",response);
+                        String[] res = response.split(" ");
+                        if(res[1].equals("true")) {
                             Intent home = new Intent(MainActivity.this, HomeActivity.class);
                             startActivity(home);
                         } else{

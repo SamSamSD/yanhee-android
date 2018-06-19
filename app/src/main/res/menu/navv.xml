@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/scan33"
-        android:icon="@drawable/googleg_disabled_color_18"
-        android:title="adadad"
-        app:showAsAction="ifRoom"/>
+        android:id="@+id/go_to_scan"
+        android:icon="@drawable/scan_back"
+        android:title="ย้อนกลับ"
+        app:showAsAction="always"
+        android:orderInCategory="0"/>
 
 </menu>

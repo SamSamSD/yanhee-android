@@ -1,51 +1,50 @@
 package com.example.helloworld.yhhospital;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class PEActivity extends AppCompatActivity {
-    CheckBox ch10,ch11,ch20,ch21,ch30,ch31,ch40,ch41,ch50,ch51,ch60,ch61,ch70,ch71,ch80,ch81,ch90,ch91,ch100,ch101,ch110,ch111;
-    Button btn;
     BottomNavigationView nav;
+    SharedPreferences pref;
+    SharedPreferences.Editor editor;
+    Button submit_pe;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pe);
+        pref = getSharedPreferences("keb", Context.MODE_PRIVATE);
 
-        ch10 = findViewById(R.id.checkBox2);
-        ch11 = findViewById(R.id.checkBox5);
-        ch20 = findViewById(R.id.checkBox3);
-        ch21 = findViewById(R.id.checkBox6);
-        ch30 = findViewById(R.id.checkBox7);
-        ch31 = findViewById(R.id.checkBox4);
-        ch40 = findViewById(R.id.checkBox9);
-        ch41 = findViewById(R.id.checkBox);
-        ch50 = findViewById(R.id.checkBox10);
-        ch51 = findViewById(R.id.checkBox11);
-        ch60 = findViewById(R.id.checkBox13);
-        ch61 = findViewById(R.id.checkBox12);
-        ch70 = findViewById(R.id.checkBox15);
-        ch71 = findViewById(R.id.checkBox8);
-        ch80 = findViewById(R.id.checkBox17);
-        ch81 = findViewById(R.id.checkBox14);
-        ch90 = findViewById(R.id.checkBox19);
-        ch91 = findViewById(R.id.checkBox16);
-        ch100 = findViewById(R.id.checkBox18);
-        ch101 = findViewById(R.id.checkBox20);
-        //btn = findViewById(R.id.);
+        final String idCard = pref.getString("idCard","");
+        final String csd_no = pref.getString("csd_no","");
+
+        submit_pe = findViewById(R.id.submit_pe);
         nav = findViewById(R.id.bottom_nav_view);
         nav.setSelectedItemId(R.id.item_4);
+
         nav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
                 switch (item.getItemId()) {
                     case R.id.item_0:
                         Intent inform0 = new Intent(PEActivity.this, DashBoardActivity.class);
@@ -70,5 +69,50 @@ public class PEActivity extends AppCompatActivity {
             }
         });
 
+        submit_pe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("submit","submit");
+                postPE(idCard, csd_no);
+            }
+        });
+    }
+
+    public void postPE(final String idCard,final String csd_no) {
+        String checkIdUrl = MainActivity.url+"app_pe.php";
+
+        StringRequest postRequest = new StringRequest(Request.Method.POST, checkIdUrl,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.i("okk",response);
+
+                        Intent inform = new Intent(PEActivity.this, DashBoardActivity.class);
+                        inform.putExtra("response", response);
+                        startActivity(inform);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError err) {
+                        Log.d("Error.Response", err.getMessage());
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("idCard", idCard);
+                params.put("csd_no", csd_no);
+                return params;
+            }
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String,String> params = new HashMap<>();
+                params.put("Content-Type","application/x-www-form-urlencoded");
+                return params;
+            }
+        };
+        Volley.newRequestQueue(this).add(postRequest);
     }
 }

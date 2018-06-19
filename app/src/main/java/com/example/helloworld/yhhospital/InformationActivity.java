@@ -38,7 +38,7 @@ public class InformationActivity extends AppCompatActivity {
 
         pref = getSharedPreferences(name, Context.MODE_PRIVATE);
         final String csd_no = pref.getString("csd_no","");
-        final String emp_id = pref.getString("emp_id","");
+        final String emp_id = pref.getString("idCard","");
 
 
         textWeight = findViewById(R.id.textWeight);
@@ -94,12 +94,11 @@ public class InformationActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.i("asd",response);
+                        Log.i("ok",response);
 
                         Intent inform = new Intent(InformationActivity.this, DashBoardActivity.class);
                         inform.putExtra("response", response);
                         startActivity(inform);
-
                     }
                 },
                 new Response.ErrorListener() {
@@ -119,6 +118,7 @@ public class InformationActivity extends AppCompatActivity {
                 params.put("height",edittextHeight.getText().toString());
                 params.put("Bp",edittextBp.getText().toString());
                 params.put("Bp2",edittextBp2.getText().toString());
+                Log.i("params", params.toString());
                 return params;
             }
 

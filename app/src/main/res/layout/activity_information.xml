@@ -113,7 +113,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@color/colorPrimary"
-        app:itemIconTint="@color/colorOrange"
+        app:itemIconTint="@color/colorWhite"
         app:itemTextColor="@color/colorWhite"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

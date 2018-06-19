@@ -81,12 +81,12 @@ public class HomeActivity extends AppCompatActivity implements ZXingScannerView.
     }
 //0 1 2  //0 2 4
     public void getCheckService() {
-        Log.i("xxx", "getCheckService");
         String url1 = MainActivity.url+"app_show_check_service.php";
         StringRequest postRequest = new StringRequest(Request.Method.GET, url1,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+//                        Log.i("show service",response);
                         final String[] places = response.split(" ");
                         TextView tv = new TextView(getApplicationContext());
                         tv.setTypeface(null, Typeface.BOLD);
@@ -96,6 +96,8 @@ public class HomeActivity extends AppCompatActivity implements ZXingScannerView.
                         final CheckBox[] buttons = new CheckBox[places.length/2];
                         for(int i = 0; i<places.length/2; i++){
                             CheckBox cb = new CheckBox(getApplicationContext());
+//                            Log.i("checkNO",places[i]);
+//                            Log.i("name",places[i+1]);
                             cb.setId(i);
                             cb.setText(places[i*2+1]);
                             cb.setTextSize(18);
@@ -114,7 +116,7 @@ public class HomeActivity extends AppCompatActivity implements ZXingScannerView.
                                         buttonView.setChecked(true);
                                         int id = buttonView.getId();
                                         checkedNo = places[id*2];
-                                        Log.i("number", checkedNo);
+//                                        Log.i("number", checkedNo);
                                     }
                                 }
                             });
@@ -149,6 +151,7 @@ public class HomeActivity extends AppCompatActivity implements ZXingScannerView.
                         if(response.equals("true")) {
                             pref = getSharedPreferences("keb", Context.MODE_PRIVATE);
                             editor = pref.edit();
+//                            Log.i("idCard", idCard.toString());
                             editor.putString("idCard", idCard);
                             editor.putString("csNo", checkedNo);
                             editor.commit();
@@ -174,7 +177,7 @@ public class HomeActivity extends AppCompatActivity implements ZXingScannerView.
                 Map<String, String> params = new HashMap<>();
                 params.put("idCard", idCard);
                 params.put("csNo", checkedNo);
-                Log.i("xxx", params.toString());
+//                Log.i("xxx", params.toString());
                 return params;
             }
 
