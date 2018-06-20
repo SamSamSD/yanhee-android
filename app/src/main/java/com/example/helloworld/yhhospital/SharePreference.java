@@ -2,22 +2,31 @@ package com.example.helloworld.yhhospital;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
+
+import java.util.Map;
 
 public class SharePreference {
-    SharedPreferences pref;
-    SharedPreferences.Editor editor;
+    private final static String PREF_FILE = "keb";
 
-    public SharePreference(Context context) {
-        pref = context.getSharedPreferences("keb", Context.MODE_PRIVATE);
-        editor = pref.edit();
+    public String getStringData(Context context, String data) {
+        SharedPreferences settings = context.getSharedPreferences(PREF_FILE, 0);
+        return settings.getString(data, "");
     }
 
-    public String getStringData(String data) {
-        return pref.getString(data, "");
+    public void setStringData(Context context, String name, String data) {
+        SharedPreferences settings = context.getSharedPreferences(PREF_FILE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString(name, data);
+        editor.apply();
     }
 
-    public void setStringData(String name, String data) {
-        pref = (SharedPreferences) editor.putString(name, data);
-        editor.commit();
+    public void getAll(Context context) {
+        SharedPreferences settings = context.getSharedPreferences(PREF_FILE, Context.MODE_PRIVATE);
+        Map<String,?> keys = settings.getAll();
+
+        for(Map.Entry<String,?> entry : keys.entrySet()){
+            Log.d("value ",entry.getKey() + ": " + entry.getValue().toString());
+        }
     }
 }

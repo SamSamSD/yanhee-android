@@ -32,6 +32,7 @@ public class DashBoardActivity extends AppCompatActivity {
     LinearLayout la;
     final String name = "keb";
     SharedPreferences pref;
+    SharePreference gg = new SharePreference(this);
     SharedPreferences.Editor editor;
     BottomNavigationView nav;
 
@@ -257,8 +258,10 @@ public class DashBoardActivity extends AppCompatActivity {
         String url = MainActivity.url + "app_show_button.php";
 
         pref = getSharedPreferences(name, Context.MODE_PRIVATE);
-        final String idCard = pref.getString("idCard", "");
-        final String csd_no = pref.getString("csd_no", "");
+        final String idCard = gg.getStringData(this, "idCard");
+        final String csd_no = gg.getStringData(this,"csd_no");
+//        final String idCard = pref.getString("idCard", "");
+//        final String csd_no = pref.getString("csd_no", "");
 
         StringRequest postRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
