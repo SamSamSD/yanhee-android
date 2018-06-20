@@ -20,7 +20,7 @@ import java.util.Map;
 
 
 public class MainActivity extends AppCompatActivity {
-    public static String url = "http://172.22.1.163/YH_project/";
+    public static String url = "http://172.22.0.144/YH_project/";
 
     EditText editPassword, editName;
     Button btnSignIn;
@@ -51,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.i("login",response);
                         String[] res = response.split(" ");
                         if(res[1].equals("true")) {
                             Intent home = new Intent(MainActivity.this, HomeActivity.class);
@@ -75,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
                 Map<String, String> params = new HashMap<>();
                 params.put("username", editName.getText().toString());
                 params.put("password", editPassword.getText().toString());
-//                Log.i("requestBody", params.toString());
                 return params;
             }
 

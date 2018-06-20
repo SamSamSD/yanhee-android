@@ -72,7 +72,6 @@ public class PEActivity extends AppCompatActivity {
         submit_pe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i("submit","submit");
                 postPE(idCard, csd_no);
             }
         });
@@ -85,7 +84,6 @@ public class PEActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.i("okk",response);
 
                         Intent inform = new Intent(PEActivity.this, DashBoardActivity.class);
                         inform.putExtra("response", response);

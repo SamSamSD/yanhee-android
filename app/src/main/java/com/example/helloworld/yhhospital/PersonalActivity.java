@@ -242,9 +242,7 @@ public class PersonalActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.i("response",response);
                         Intent inform = new Intent(PersonalActivity.this, DashBoardActivity.class);
-//                        inform.putExtra("response", response);
                         startActivity(inform);
                     }
                 },
