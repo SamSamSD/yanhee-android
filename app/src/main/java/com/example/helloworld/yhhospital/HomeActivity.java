@@ -3,6 +3,7 @@ package com.example.helloworld.yhhospital;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
@@ -11,6 +12,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -25,6 +27,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,7 +40,8 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 public class HomeActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler{
     Button btn;
-    String checkedNo = "";
+    SharePreference gg = new SharePreference();
+    int checkedNo = 0;
     LinearLayout linearLayout;
     private ZXingScannerView zXingScannerView;
     boolean status = false;
@@ -49,17 +56,8 @@ public class HomeActivity extends AppCompatActivity implements ZXingScannerView.
         getCheckService();
     }
 
-
     @Override
     public void handleResult(com.google.zxing.Result result) {
-//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//        builder.setTitle("hello");
-//        builder.setMessage(result.getText());
-//        AlertDialog alertDialog = builder.create();
-//        alertDialog.show();
-
-        //Intent home = new Intent(home.this, HomeActivity.class);
-        //startActivity(home);
         String idCard = result.getText();
         postCheckId(idCard);
     }
@@ -79,48 +77,72 @@ public class HomeActivity extends AppCompatActivity implements ZXingScannerView.
             zXingScannerView.stopCamera();
         }
     }
-//0 1 2  //0 2 4
+
     public void getCheckService() {
         String url1 = MainActivity.url+"app_show_check_service.php";
+        TextView tv = new TextView(getApplicationContext());
+        tv.setTypeface(null, Typeface.BOLD);
+        tv.setTextSize(22);
+        tv.setText("เลือกสถานที่ตรวจ");
+        linearLayout.addView(tv);
+
         StringRequest postRequest = new StringRequest(Request.Method.GET, url1,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-//                        Log.i("show service",response);
-                        final String[] places = response.split(" ");
-                        TextView tv = new TextView(getApplicationContext());
-                        tv.setTypeface(null, Typeface.BOLD);
-                        tv.setTextSize(22);
-                        tv.setText("เลือกสถานที่ตรวจ");
-                        linearLayout.addView(tv);
-                        final CheckBox[] buttons = new CheckBox[places.length/2];
-                        for(int i = 0; i<places.length/2; i++){
-                            CheckBox cb = new CheckBox(getApplicationContext());
-//                            Log.i("checkNO",places[i]);
-//                            Log.i("name",places[i+1]);
-                            cb.setId(i);
-                            cb.setText(places[i*2+1]);
-                            cb.setTextSize(18);
-                            cb.setBottom(18);
-                            linearLayout.addView(cb);
-                            buttons[i] = cb;
-                        }
-                        for(int i = 0; i<places.length/2; i++){
-                            buttons[i].setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                                @Override
-                                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                                    if(isChecked == true) {
-                                        for(int j=0; j<places.length/2; j++) {
+                        try {
+                            final JSONArray res = new JSONArray(response);
+
+                            final CheckBox[] buttons = new CheckBox[res.length()];
+                            for (int i=0; i<res.length(); i++) {
+                                JSONObject obj = res.getJSONObject(i);
+                                String cs_no = obj.getString("cs_no");
+                                String name = obj.getString("name");
+                                String add = obj.getString("address");
+                                int x = Integer.parseInt(cs_no);
+
+                                CheckBox cb = new CheckBox(getApplicationContext());
+                                cb.setId(x);
+
+                                cb.setTextColor(Color.BLACK);
+                                cb.setText(name+" "+add);
+                                cb.setTextSize(18);
+                                cb.setBottom(18);
+                                linearLayout.addView(cb);
+                                buttons[i] = cb;
+
+                            }
+                            final int length = res.length();
+                            for (int i=0; i<length; i++) {
+                                buttons[i].setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                                    @Override
+                                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                        for (int j=0; j<length; j++) {
+//                                            Log.i("cs_no", String.valueOf(buttons[j].getId()));
+//                                            Log.i("gg",gg.getStringData(getApplicationContext(),"csNo"));
+//                                            if (gg.getStringData(getApplicationContext(), "csNo").equals(String.valueOf(buttons[j].getId()))) {
+//                                                Log.i("test","1234");
+//                                                buttons[j].setChecked(true);
+//                                            }
+//                                            else {
+//                                                buttons[j].setChecked(false);
+//                                            }
+//                                            String csNoPref = gg.getStringData(getApplicationContext(), "csNo");
+//                                            int test = buttons[j].getId();
                                             buttons[j].setChecked(false);
                                         }
-                                        buttonView.setChecked(true);
-                                        int id = buttonView.getId();
-                                        checkedNo = places[id*2];
-//                                        Log.i("number", checkedNo);
+                                        if(isChecked == true) {
+                                            checkedNo = buttonView.getId();
+                                            gg.setStringData(getApplicationContext(), "csNo", String.valueOf(checkedNo));
+                                            buttonView.setChecked(true);
+                                        }
                                     }
-                                }
-                            });
+                                });
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
+
                     }
                 },
                 new Response.ErrorListener() {
@@ -151,9 +173,8 @@ public class HomeActivity extends AppCompatActivity implements ZXingScannerView.
                         if(response.equals("true")) {
                             pref = getSharedPreferences("keb", Context.MODE_PRIVATE);
                             editor = pref.edit();
-//                            Log.i("idCard", idCard.toString());
                             editor.putString("idCard", idCard);
-                            editor.putString("csNo", checkedNo);
+                            editor.putString("csNo", String.valueOf(checkedNo));
                             editor.commit();
                             Intent home = new Intent(HomeActivity.this, DashBoardActivity.class);
                             startActivity(home);
@@ -176,8 +197,7 @@ public class HomeActivity extends AppCompatActivity implements ZXingScannerView.
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("idCard", idCard);
-                params.put("csNo", checkedNo);
-//                Log.i("xxx", params.toString());
+                params.put("csNo", String.valueOf(checkedNo));
                 return params;
             }
 

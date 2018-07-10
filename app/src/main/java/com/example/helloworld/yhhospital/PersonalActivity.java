@@ -25,32 +25,30 @@ import java.util.Map;
 
 public class PersonalActivity extends AppCompatActivity {
     final String name = "keb";
-    SharedPreferences pref;
-    //SharedPreferences.Editor editor;
-//    final String csd_no = pref.getString("csd_no","");
-//    final String emp_id = pref.getString("emp_id","");
+    SharePreference gg = new SharePreference();
     CheckBox cb10,cb11,cb20,cb21,cb30,cb31,cb40,cb41,cb50,cb51,cb60,cb61,cb70,cb71;
     Button submit_ps;
-    String[] ps_checked = new String[]{"0","0","0","0","0","0","0"};
+    String[] ps_checked = new String[]{"0", "0", "0", "0", "0", "0", "0"};
     BottomNavigationView nav;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal);
-        cb10 = findViewById(R.id.cb10);
-        cb11 = findViewById(R.id.cb11);
-        cb20 = findViewById(R.id.cb20);
-        cb21 = findViewById(R.id.cb21);
-        cb30 = findViewById(R.id.cb30);
-        cb31 = findViewById(R.id.cb31);
-        cb40 = findViewById(R.id.cb40);
-        cb41 = findViewById(R.id.cb41);
-        cb50 = findViewById(R.id.cb50);
-        cb51 = findViewById(R.id.cb51);
-        cb60 = findViewById(R.id.cb60);
-        cb61 = findViewById(R.id.cb61);
-        cb70 = findViewById(R.id.cb70);
-        cb71 = findViewById(R.id.cb71);
+        cb10 = findViewById(R.id.checkBox2);
+        cb11 = findViewById(R.id.checkBox);
+        cb20 = findViewById(R.id.checkBox3);
+        cb21 = findViewById(R.id.checkBox4);
+        cb30 = findViewById(R.id.checkBox5);
+        cb31 = findViewById(R.id.checkBox6);
+        cb40 = findViewById(R.id.checkBox7);
+        cb41 = findViewById(R.id.checkBox8);
+        cb50 = findViewById(R.id.checkBox9);
+        cb51 = findViewById(R.id.checkBox10);
+        cb60 = findViewById(R.id.checkBox11);
+        cb61 = findViewById(R.id.checkBox12);
+        cb70 = findViewById(R.id.checkBox13);
+        cb71 = findViewById(R.id.checkBox14);
         submit_ps = findViewById(R.id.submit_ps);
 
         nav = findViewById(R.id.bottom_nav_view);
@@ -236,13 +234,54 @@ public class PersonalActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void getPersonal(final String emp_id,final String csd_no) {
+        String checkIdUrl = MainActivity.url+"app_get_info.php";
+
+        StringRequest postRequest = new StringRequest(Request.Method.POST, checkIdUrl,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError err) {
+                        Log.d("Error.Response", err.getMessage());
+                    }
+                }
+        ) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("idCard", emp_id);
+                params.put("csd_no", csd_no);
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String,String> params = new HashMap<>();
+                params.put("Content-Type","application/x-www-form-urlencoded");
+                return params;
+            }
+        };
+        Volley.newRequestQueue(this).add(postRequest);
+    }
+
     public void postPersonal() {
         String checkIdUrl = MainActivity.url+"app_ps.php";
+        final String emp_id = gg.getStringData(this,"idCard");
+        final String csd_no = gg.getStringData(this,"csd_no");
+
         StringRequest postRequest = new StringRequest(Request.Method.POST, checkIdUrl,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         Intent inform = new Intent(PersonalActivity.this, DashBoardActivity.class);
+                        inform.putExtra("response", response);
                         startActivity(inform);
                     }
                 },
@@ -257,16 +296,16 @@ public class PersonalActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-//                params.put("idCard", emp_id);
-//                params.put("csd_no", csd_no);
-                params.put("checked0", ps_checked[0]);
-                params.put("checked1", ps_checked[1]);
-                params.put("checked2", ps_checked[2]);
-                params.put("checked3", ps_checked[3]);
-                params.put("checked4", ps_checked[4]);
-                params.put("checked5", ps_checked[5]);
-                params.put("checked6", ps_checked[6]);
-                Log.i("x",params.toString());
+                params.put("idCard", emp_id);
+                params.put("csd_no", csd_no);
+                params.put("c1", ps_checked[0]);
+                params.put("c2", ps_checked[1]);
+                params.put("c3", ps_checked[2]);
+                params.put("c4", ps_checked[3]);
+                params.put("c5", ps_checked[4]);
+                params.put("c6", ps_checked[5]);
+                params.put("c7", ps_checked[6]);
+                params.put("user",gg.getStringData(getApplicationContext(),"user"));
                 return params;
             }
 

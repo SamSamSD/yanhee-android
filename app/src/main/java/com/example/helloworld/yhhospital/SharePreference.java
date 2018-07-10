@@ -21,12 +21,10 @@ public class SharePreference {
         editor.apply();
     }
 
-    public void getAll(Context context) {
+    public void setIntData(Context context, String name, int data) {
         SharedPreferences settings = context.getSharedPreferences(PREF_FILE, Context.MODE_PRIVATE);
-        Map<String,?> keys = settings.getAll();
-
-        for(Map.Entry<String,?> entry : keys.entrySet()){
-            Log.d("value ",entry.getKey() + ": " + entry.getValue().toString());
-        }
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putInt(name, data);
+        editor.apply();
     }
 }

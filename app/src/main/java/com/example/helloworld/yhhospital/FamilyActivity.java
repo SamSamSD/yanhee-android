@@ -1,6 +1,7 @@
 package com.example.helloworld.yhhospital;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -12,26 +13,53 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
 public class FamilyActivity extends AppCompatActivity {
     CheckBox cb10, cb11, cb20, cb21, cb30, cb31, cb40, cb41, cb50, cb51;
     Button submit_family;
+    private JSONObject obj;
+    SharedPreferences pref;
+    SharePreference gg = new SharePreference();
     String[] family_checked = new String[]{"0", "0", "0", "0", "0", "0", "0"};
     BottomNavigationView nav;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_family);
-        cb10 = findViewById(R.id.cb10);
-        cb11 = findViewById(R.id.cb11);
-        cb20 = findViewById(R.id.cb20);
-        cb21 = findViewById(R.id.cb21);
-        cb30 = findViewById(R.id.cb30);
-        cb31 = findViewById(R.id.cb31);
-        cb40 = findViewById(R.id.cb40);
-        cb41 = findViewById(R.id.cb41);
-        cb50 = findViewById(R.id.cb50);
-        cb51 = findViewById(R.id.cb51);
+        final String csd_no = pref.getString("csd_no","");
+        final String emp_id = pref.getString("idCard","");
+        cb10 = findViewById(R.id.checkBox15);
+        cb11 = findViewById(R.id.checkBox16);
+        cb20 = findViewById(R.id.checkBox17);
+        cb21 = findViewById(R.id.checkBox18);
+        cb30 = findViewById(R.id.checkBox19);
+        cb31 = findViewById(R.id.checkBox20);
+        cb40 = findViewById(R.id.checkBox21);
+        cb41 = findViewById(R.id.checkBox22);
+        cb50 = findViewById(R.id.checkBox23);
+        cb51 = findViewById(R.id.checkBox24);
         submit_family = findViewById(R.id.submit_family);
+        getFamily(emp_id,csd_no);
+
+
+        submit_family.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                postFamily();
+            }
+        });
 
 
         nav = findViewById(R.id.bottom_nav_view);
@@ -168,5 +196,87 @@ public class FamilyActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public void getFamily(final String emp_id,final String csd_no) {
+        String familyUrl = MainActivity.url+"app_get_family.php";
+
+        StringRequest postRequest = new StringRequest(Request.Method.POST, familyUrl,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError err) {
+                        Log.d("Error.Response", err.getMessage());
+                    }
+                }
+        ) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("idCard", emp_id);
+                params.put("csd_no", csd_no);
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String,String> params = new HashMap<>();
+                params.put("Content-Type","application/x-www-form-urlencoded");
+                return params;
+            }
+        };
+        Volley.newRequestQueue(this).add(postRequest);
+    }
+
+    public void postFamily() {
+        String checkIdUrl = MainActivity.url+"app_family.php";
+        final String emp_id = gg.getStringData(this,"idCard");
+        final String csd_no = gg.getStringData(this,"csd_no");
+
+        StringRequest postRequest = new StringRequest(Request.Method.POST, checkIdUrl,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Intent inform = new Intent(FamilyActivity.this, DashBoardActivity.class);
+                        inform.putExtra("response", response);
+                        startActivity(inform);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError err) {
+                        Log.d("Error.Response", err.getMessage());
+                    }
+                }
+        ) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("idCard", emp_id);
+                params.put("csd_no", csd_no);
+                params.put("x1", family_checked[0]);
+                params.put("x2", family_checked[1]);
+                params.put("x3", family_checked[2]);
+                params.put("x4", family_checked[3]);
+                params.put("x5", family_checked[4]);
+                params.put("user",gg.getStringData(getApplicationContext(),"user"));
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String,String> params = new HashMap<>();
+                params.put("Content-Type","application/x-www-form-urlencoded");
+                return params;
+            }
+        };
+        Volley.newRequestQueue(this).add(postRequest);
     }
 }

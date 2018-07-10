@@ -3,6 +3,7 @@ package com.example.helloworld.yhhospital;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -10,9 +11,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -32,9 +35,10 @@ public class DashBoardActivity extends AppCompatActivity {
     LinearLayout la;
     final String name = "keb";
     SharedPreferences pref;
-    SharePreference gg = new SharePreference(this);
-    SharedPreferences.Editor editor;
+    SharePreference gg = new SharePreference();
     BottomNavigationView nav;
+    JSONObject obj;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,13 +52,11 @@ public class DashBoardActivity extends AppCompatActivity {
         la = (LinearLayout) findViewById(R.id.all_buttons);
 
         pref = getSharedPreferences(name, Context.MODE_PRIVATE);
-        editor = pref.edit();
 
         final String idCard = pref.getString("idCard", "");
         final String csNo = pref.getString("csNo", "");
         //postDashBoard จะได้ค่า csd_no มาแล้วเก็บลง sharePref
         postDashBoard(idCard, csNo);
-        getButton();
 
         nav.setSelectedItemId(R.id.item_0);
         nav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -78,7 +80,6 @@ public class DashBoardActivity extends AppCompatActivity {
                         startActivity(inform3);
                         return true;
                     case R.id.item_4:
-//                        Log.i("back","back");
                         Intent inform445 = new Intent(DashBoardActivity.this, PEActivity.class);
                         startActivity(inform445);
                         return true;
@@ -94,14 +95,25 @@ public class DashBoardActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        String[] response2 = response.split(" ");
-                        textView1.setText(String.valueOf(response2[0] + " " + response2[1] + " " + response2[2] + " " + response2[3] + " " + response2[4]));
-                        textView2.setText(String.valueOf(response2[5] + " " + response2[6] + " " + response2[7] + response2[8] + " " + response2[9]));
-                        textView3.setText(String.valueOf(response2[10] + " " + response2[11] + " " + response2[12]));
-                        pref = getSharedPreferences(name, Context.MODE_PRIVATE);
-                        editor = pref.edit();
-                        editor.putString("csd_no", response2[13]);
-                        editor.commit();
+                        try {
+                            JSONArray res = new JSONArray(response);
+                            JSONObject obj = res.getJSONObject(0);
+                            String no = obj.getString("no");
+                            String name = obj.getString("name");
+                            String age = obj.getString("age");
+                            String bd = obj.getString("bd");
+                            String pro = obj.getString("pro");
+                            String csd = obj.getString("csd");
+                            gg.setStringData(getApplicationContext(),"csd_no",csd);
+                            textView1.setText(String.valueOf("ลำดับ "+no+" "+name));
+                            textView2.setText(String.valueOf("อายุ "+age+" วันเกิด "+bd));
+                            textView3.setText(String.valueOf(pro));
+                            getButton();
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
                     }
                 },
                 new Response.ErrorListener() {
@@ -130,84 +142,14 @@ public class DashBoardActivity extends AppCompatActivity {
         Volley.newRequestQueue(this).add(postRequest);
     }
 
-//    public void postButtonDashBoard(final String idCard) {
-//        String checkIdUrl = MainActivity.url+"app_check_btn_dashboard.php";
-//        pref = getSharedPreferences(name, Context.MODE_PRIVATE);
-//        editor = pref.edit();
-//
-//        final String csd_no_get = pref.getString("csd_no","");
-//        StringRequest postRequest = new StringRequest(Request.Method.POST, checkIdUrl,
-//                new Response.Listener<String>() {
-//                    @Override
-//                    public void onResponse(String response) {
-//                        if(response.equals("false")) {
-//                            Log.i("res","false");
-//                        }else {
-//                            String[] res = response.split(" ");
-//                            if(res[2].equals("1")) {
-//                                b1.setBackgroundColor(Color.rgb(0,255,0));
-//                            }
-//                            if(res[3].equals("1")) {
-//                                b2.setBackgroundColor(Color.rgb(0,255,0));
-//                            }
-//                            if(res[4].equals("1")) {
-//                                b3.setBackgroundColor(Color.rgb(0,255,0));
-//                            }
-//                            if(res[5].equals("1")) {
-//                                b4.setBackgroundColor(Color.rgb(0,255,0));
-//                            }
-//                        }
-//
-//                    }
-//                },
-//                new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError err) {
-//                        Log.d("Error.Response", err.getMessage());
-//                    }
-//                }
-//        ) {
-//
-//            @Override
-//            protected Map<String, String> getParams() {
-//                Map<String, String> params = new HashMap<>();
-//                params.put("idCard", idCard);
-//                params.put("csd_no", csd_no_get);
-//                return params;
-//            }
-//
-//            @Override
-//            public Map<String, String> getHeaders() {
-//                Map<String,String> params = new HashMap<>();
-//                params.put("Content-Type","application/x-www-form-urlencoded");
-//                return params;
-//            }
-//        };
-//        Volley.newRequestQueue(this).add(postRequest);
-//    }
-
-    public void postCL(final String idCard, final String btn) {
+    public void postCL(final int tag_id) {
         String checkIdUrl = MainActivity.url + "app_check_list.php";
-        pref = getSharedPreferences(name, Context.MODE_PRIVATE);
-        editor = pref.edit();
-        final String csd_no_get = pref.getString("csd_no", "");
 
         StringRequest postRequest = new StringRequest(Request.Method.POST, checkIdUrl,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-//                        if(response.equals("1")) {
-//                            b1.setBackgroundColor(Color.rgb(0,255,0));
-//                        }
-//                        else if(response.equals("2")) {
-//                            b2.setBackgroundColor(Color.rgb(0,255,0));
-//                        }
-//                        else if(response.equals("3")) {
-//                            b3.setBackgroundColor(Color.rgb(0,255,0));
-//                        }
-//                        else if(response.equals("4")) {
-//                            b4.setBackgroundColor(Color.rgb(0,255,0));
-//                        }
+
                     }
                 },
                 new Response.ErrorListener() {
@@ -221,9 +163,10 @@ public class DashBoardActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put("idCard", idCard);
-                params.put("csd_no", csd_no_get);
-                params.put("case", btn);
+//                params.put("idCard", idCard);
+//                params.put("csd_no", csd_no_get);
+                params.put("tag_id", String.valueOf(tag_id));
+                params.put("user",gg.getStringData(getApplicationContext(),"user"));
                 return params;
             }
 
@@ -257,36 +200,44 @@ public class DashBoardActivity extends AppCompatActivity {
     public void getButton() {
         String url = MainActivity.url + "app_show_button.php";
 
-        pref = getSharedPreferences(name, Context.MODE_PRIVATE);
         final String idCard = gg.getStringData(this, "idCard");
         final String csd_no = gg.getStringData(this,"csd_no");
-//        final String idCard = pref.getString("idCard", "");
-//        final String csd_no = pref.getString("csd_no", "");
-
         StringRequest postRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
                         try {
                             JSONArray res = new JSONArray(response);
                             final Button[] buttons = new Button[res.length()];
                             for(int i=0; i<res.length(); i++) {
-                                JSONObject obj = res.getJSONObject(i);
-                                String name = obj.getString("name");
+                                obj = res.getJSONObject(i);
+                                String id = obj.getString("id");
+                                final String name = obj.getString("name");
+                                String status = obj.getString("status");
+                                int status1 = Integer.parseInt(status);
+                                int ct_id = Integer.parseInt(id);
 
                                 Button b = new Button(getApplicationContext());
-                                b.setId(i);
+                                b.setId(ct_id);
                                 b.setText(name);
                                 la.addView(b);
                                 buttons[i] = b;
+                                if (status1 == 1){
+                                    b.setBackgroundColor(Color.rgb(0,255,0));
+                                }
 
-//                                b.setOnClickListener(new View.OnClickListener() {
-//                                    @Override
-//                                    public void onClick(View v) {
-//
-//                                    }
-//                                });
+                                b.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        if (name.equals(gg.getStringData(getApplicationContext(),"tag"))){
+                                            v.setBackgroundColor(Color.rgb(0,255,0));
+                                            postCL(v.getId());
+                                        }
+                                        else {
+                                            Toast.makeText(DashBoardActivity.this, "โปรดเลือกเฉพาะจุดตรวจของคุณ", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
                             }
 
                         } catch (JSONException e) {
