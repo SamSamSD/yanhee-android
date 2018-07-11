@@ -108,19 +108,6 @@ public class InformationActivity extends AppCompatActivity {
                             String height = obj.getString(String.valueOf(textHeight.getText()));
                             String bp = obj.getString(String.valueOf(textBp.getText()));
                             String bp2 = obj.getString(String.valueOf(textBp2.getText()));
-//                            Log.i("test","kuy"+bp2.toString());
-//                            if (!weight.equals(NULL)){
-//                                edittextWeight.setText(weight);
-//                            }
-//                            if (!height.equals(NULL)){
-//                                edittextHeight.setText(height);
-//                            }
-//                            if (!bp.equals(NULL)){
-//                                edittextBp.setText(bp);
-//                            }
-//                            if (!bp2.equals(NULL)){
-//                                edittextBp.setText(bp2);
-//                            }
                             edittextWeight.setText(weight);
                             edittextHeight.setText(height);
                             edittextBp.setText(bp);
