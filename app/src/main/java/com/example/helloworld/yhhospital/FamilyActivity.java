@@ -29,8 +29,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FamilyActivity extends AppCompatActivity {
-//    CheckBox cb10, cb11, cb20, cb21, cb30, cb31, cb40, cb41, cb50, cb51;
-    CheckBox[] cb = new CheckBox[10];
+    CheckBox cb10, cb11, cb20, cb21, cb30, cb31, cb40, cb41, cb50, cb51;
     TextView x1,x2,x3,x4,x5;
     Button submit_family;
     private JSONObject obj;
@@ -48,16 +47,16 @@ public class FamilyActivity extends AppCompatActivity {
         x3 = findViewById(R.id.textView14);
         x4 = findViewById(R.id.textView15);
         x5 = findViewById(R.id.textView16);
-        cb[0] = findViewById(R.id.checkBox15);
-        cb[1] = findViewById(R.id.checkBox16);
-        cb[2] = findViewById(R.id.checkBox17);
-        cb[3] = findViewById(R.id.checkBox18);
-        cb[4] = findViewById(R.id.checkBox19);
-        cb[5] = findViewById(R.id.checkBox20);
-        cb[6] = findViewById(R.id.checkBox21);
-        cb[7] = findViewById(R.id.checkBox22);
-        cb[8] = findViewById(R.id.checkBox23);
-        cb[9] = findViewById(R.id.checkBox24);
+        cb10 = findViewById(R.id.checkBox15);
+        cb11 = findViewById(R.id.checkBox16);
+        cb20 = findViewById(R.id.checkBox17);
+        cb21 = findViewById(R.id.checkBox18);
+        cb30 = findViewById(R.id.checkBox19);
+        cb31 = findViewById(R.id.checkBox20);
+        cb40 = findViewById(R.id.checkBox21);
+        cb41 = findViewById(R.id.checkBox22);
+        cb50 = findViewById(R.id.checkBox23);
+        cb51 = findViewById(R.id.checkBox24);
         submit_family = findViewById(R.id.submit_family);
         getFamily(emp_id,csd_no);
 
@@ -68,7 +67,6 @@ public class FamilyActivity extends AppCompatActivity {
                 postFamily();
             }
         });
-
 
         nav = findViewById(R.id.bottom_nav_view);
         nav.setSelectedItemId(R.id.item_3);
@@ -103,112 +101,107 @@ public class FamilyActivity extends AppCompatActivity {
     }
 
     public void handleButton() {
-        for (int i=0;i<=cb.length/2;i++){
-            final int finalI = i;
-            cb[i].setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked) {
-                        cb[finalI +1].setChecked(false);
-                        cb[finalI +1].setSelected(false);
-                        family_checked[0] = "1";
 
-                    }
+        cb10.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    cb11.setChecked(false);
+                    cb11.setSelected(false);
+                    family_checked[1] = "1";
                 }
-            });
-            final int finalI1 = i;
-            cb[i+1].setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked) {
-                        cb[finalI1].setChecked(false);
-                        cb[finalI1].setSelected(false);
-                        family_checked[0] = "0";
-                    }
+            }
+        });
+        cb11.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    cb10.setChecked(false);
+                    cb10.setSelected(false);
+                    family_checked[1] = "0";
                 }
-            });
-        }
-
-//        cb20.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                if (isChecked) {
-//                    cb21.setChecked(false);
-//                    cb21.setSelected(false);
-//                    family_checked[1] = "1";
-//                }
-//            }
-//        });
-//        cb21.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                if (isChecked) {
-//                    cb20.setChecked(false);
-//                    cb20.setSelected(false);
-//                    family_checked[1] = "0";
-//                }
-//            }
-//        });
-//        cb30.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                if (isChecked) {
-//                    cb31.setChecked(false);
-//                    cb31.setSelected(false);
-//                    family_checked[2] = "1";
-//                }
-//            }
-//        });
-//        cb31.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                if (isChecked) {
-//                    cb30.setChecked(false);
-//                    cb30.setSelected(false);
-//                    family_checked[2] = "0";
-//                }
-//            }
-//        });
-//        cb40.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                if (isChecked) {
-//                    cb41.setChecked(false);
-//                    cb41.setSelected(false);
-//                    family_checked[3] = "1";
-//                }
-//            }
-//        });
-//        cb41.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                if (isChecked) {
-//                    cb40.setChecked(false);
-//                    cb40.setSelected(false);
-//                    family_checked[3] = "0";
-//                }
-//            }
-//        });
-//        cb50.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                if (isChecked) {
-//                    cb51.setChecked(false);
-//                    cb51.setSelected(false);
-//                    family_checked[4] = "1";
-//                }
-//            }
-//        });
-//        cb51.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                if (isChecked) {
-//                    cb50.setChecked(false);
-//                    cb50.setSelected(false);
-//                    family_checked[4] = "0";
-//                }
-//            }
-//        });
+            }
+        });
+        cb20.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    cb21.setChecked(false);
+                    cb21.setSelected(false);
+                    family_checked[1] = "1";
+                }
+            }
+        });
+        cb21.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    cb20.setChecked(false);
+                    cb20.setSelected(false);
+                    family_checked[1] = "0";
+                }
+            }
+        });
+        cb30.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    cb31.setChecked(false);
+                    cb31.setSelected(false);
+                    family_checked[2] = "1";
+                }
+            }
+        });
+        cb31.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    cb30.setChecked(false);
+                    cb30.setSelected(false);
+                    family_checked[2] = "0";
+                }
+            }
+        });
+        cb40.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    cb41.setChecked(false);
+                    cb41.setSelected(false);
+                    family_checked[3] = "1";
+                }
+            }
+        });
+        cb41.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    cb40.setChecked(false);
+                    cb40.setSelected(false);
+                    family_checked[3] = "0";
+                }
+            }
+        });
+        cb50.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    cb51.setChecked(false);
+                    cb51.setSelected(false);
+                    family_checked[4] = "1";
+                }
+            }
+        });
+        cb51.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    cb50.setChecked(false);
+                    cb50.setSelected(false);
+                    family_checked[4] = "0";
+                }
+            }
+        });
     }
 
     public void getFamily(final String emp_id,final String csd_no) {
@@ -220,24 +213,41 @@ public class FamilyActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         try {
                             JSONArray res = new JSONArray(response);
-                            obj = res.getJSONObject(0);
-                            String text1 = obj.getString(String.valueOf(x1.getText()));
-                            String text2 = obj.getString(String.valueOf(x2.getText()));
-                            String text3 = obj.getString(String.valueOf(x3.getText()));
-                            String text4 = obj.getString(String.valueOf(x4.getText()));
-                            String text5 = obj.getString(String.valueOf(x5.getText()));
-                            family_checked[0] = text1;
-                            family_checked[1] = text2;
-                            family_checked[2] = text3;
-                            family_checked[3] = text4;
-                            family_checked[4] = text5;
-//                            for (int i =0;i<=family_checked.length ;i++){
-//                                if (family_checked[i].equals("0")) {
-//                                    String x = "cb"+"i+1";
-//                                    x.setChecked(false)
-//                                }
-//
-//                            }
+                            x1.setText(res.getJSONObject(0).getString("name"));
+                            x2.setText(res.getJSONObject(1).getString("name"));
+                            x3.setText(res.getJSONObject(2).getString("name"));
+                            x4.setText(res.getJSONObject(3).getString("name"));
+                            x5.setText(res.getJSONObject(4).getString("name"));
+
+                            if(res.getJSONObject(0).getString("status").equals("0")) {
+                                cb11.setChecked(true);
+                            }else if(res.getJSONObject(0).getString("status").equals("1")) {
+                                cb10.setChecked(true);
+                            }
+
+                            if(res.getJSONObject(1).getString("status").equals("0")) {
+                                cb21.setChecked(true);
+                            }else if(res.getJSONObject(1).getString("status").equals("1")) {
+                                cb20.setChecked(true);
+                            }
+
+                            if(res.getJSONObject(2).getString("status").equals("0")) {
+                                cb31.setChecked(true);
+                            }else if(res.getJSONObject(2).getString("status").equals("1")) {
+                                cb30.setChecked(true);
+                            }
+
+                            if(res.getJSONObject(3).getString("status").equals("0")) {
+                                cb41.setChecked(true);
+                            }else if(res.getJSONObject(3).getString("status").equals("1")) {
+                                cb40.setChecked(true);
+                            }
+
+                            if(res.getJSONObject(4).getString("status").equals("0")) {
+                                cb51.setChecked(true);
+                            }else if(res.getJSONObject(4).getString("status").equals("1")) {
+                                cb50.setChecked(true);
+                            }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
