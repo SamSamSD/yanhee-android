@@ -1,5 +1,6 @@
 package com.example.helloworld.yhhospital;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -31,6 +32,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DashBoardActivity extends AppCompatActivity {
+    ProgressDialog dialog;
     TextView textView1, textView2, textView3;
     LinearLayout la;
     final String name = "keb";
@@ -39,12 +41,11 @@ public class DashBoardActivity extends AppCompatActivity {
     BottomNavigationView nav;
     JSONObject obj;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-
+        dialog = ProgressDialog.show(DashBoardActivity.this, null,"Loading...", false,true);
         textView1 = findViewById(R.id.show_employee);
         textView2 = findViewById(R.id.show_employee2);
         textView3 = findViewById(R.id.show_employee3);
@@ -95,6 +96,7 @@ public class DashBoardActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        dialog.dismiss();
                         try {
                             JSONArray res = new JSONArray(response);
                             JSONObject obj = res.getJSONObject(0);

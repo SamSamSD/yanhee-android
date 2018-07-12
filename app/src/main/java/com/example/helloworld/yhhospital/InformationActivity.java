@@ -1,5 +1,6 @@
 package com.example.helloworld.yhhospital;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -32,21 +33,20 @@ import static com.google.android.gms.common.internal.safeparcel.SafeParcelable.N
 public class InformationActivity extends AppCompatActivity {
     final String name = "keb";
     private JSONObject obj;
-    SharedPreferences pref;
     SharePreference gg = new SharePreference();
     TextView textWeight,textHeight,textBp,textBp2;
     EditText edittextWeight,edittextHeight,edittextBp,edittextBp2;
     Button btn_submit_info;
+    ProgressDialog dialog;
     BottomNavigationView nav;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_information);
 
-        pref = getSharedPreferences(name, Context.MODE_PRIVATE);
-        final String csd_no = pref.getString("csd_no","");
-        final String emp_id = pref.getString("idCard","");
-
+        final String csd_no = gg.getStringData(getApplicationContext(), "csd_no");
+        final String emp_id = gg.getStringData(getApplicationContext(),"idCard");
+        dialog = ProgressDialog.show(InformationActivity.this, null,"Loading...", false,true);
         textWeight = findViewById(R.id.textWeight);
         textHeight = findViewById(R.id.textHeight);
         textBp = findViewById(R.id.textBp);
@@ -101,6 +101,7 @@ public class InformationActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        dialog.dismiss();
                         try {
                             JSONArray res = new JSONArray(response);
                             obj = res.getJSONObject(0);

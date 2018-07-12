@@ -1,5 +1,6 @@
 package com.example.helloworld.yhhospital;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -30,8 +31,9 @@ import java.util.Map;
 
 public class FamilyActivity extends AppCompatActivity {
     CheckBox cb10, cb11, cb20, cb21, cb30, cb31, cb40, cb41, cb50, cb51;
-    TextView x1,x2,x3,x4,x5;
+    private TextView x1,x2,x3,x4,x5;
     Button submit_family;
+    ProgressDialog dialog;
     private JSONObject obj;
     SharePreference gg = new SharePreference();
     String[] family_checked = new String[]{"0", "0", "0", "0", "0"};
@@ -40,6 +42,7 @@ public class FamilyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_family);
+        dialog = ProgressDialog.show(FamilyActivity.this, null,"Loading...", false,true);
         final String csd_no = gg.getStringData(getApplicationContext(), "csd_no");
         final String emp_id = gg.getStringData(getApplicationContext(),"idCard");
         x1 = findViewById(R.id.textView12);
@@ -108,7 +111,7 @@ public class FamilyActivity extends AppCompatActivity {
                 if (isChecked) {
                     cb11.setChecked(false);
                     cb11.setSelected(false);
-                    family_checked[1] = "1";
+                    family_checked[0] = "1";
                 }
             }
         });
@@ -118,7 +121,7 @@ public class FamilyActivity extends AppCompatActivity {
                 if (isChecked) {
                     cb10.setChecked(false);
                     cb10.setSelected(false);
-                    family_checked[1] = "0";
+                    family_checked[0] = "0";
                 }
             }
         });
@@ -211,6 +214,7 @@ public class FamilyActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        dialog.dismiss();
                         try {
                             JSONArray res = new JSONArray(response);
                             x1.setText(res.getJSONObject(0).getString("name"));
@@ -312,6 +316,7 @@ public class FamilyActivity extends AppCompatActivity {
                 params.put("x4", family_checked[3]);
                 params.put("x5", family_checked[4]);
                 params.put("user",gg.getStringData(getApplicationContext(),"user"));
+                Log.i("hhh",params.toString());
                 return params;
             }
 

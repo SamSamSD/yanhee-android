@@ -1,5 +1,7 @@
 package com.example.helloworld.yhhospital;
 
+import android.app.Presentation;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -20,14 +23,19 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class PersonalActivity extends AppCompatActivity {
     final String name = "keb";
+    private TextView x1,x2,x3,x4,x5,x6,x7;
     SharePreference gg = new SharePreference();
     CheckBox cb10,cb11,cb20,cb21,cb30,cb31,cb40,cb41,cb50,cb51,cb60,cb61,cb70,cb71;
     Button submit_ps;
+    ProgressDialog dialog;
     String[] ps_checked = new String[]{"0", "0", "0", "0", "0", "0", "0"};
     BottomNavigationView nav;
 
@@ -35,6 +43,14 @@ public class PersonalActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal);
+        dialog = ProgressDialog.show(PersonalActivity.this, null,"Loading...", false,true);
+        x1 = findViewById(R.id.textView2);
+        x2 = findViewById(R.id.textView3);
+        x3 = findViewById(R.id.textView4);
+        x4 = findViewById(R.id.textView5);
+        x5 = findViewById(R.id.textView6);
+        x6 = findViewById(R.id.textView7);
+        x7 = findViewById(R.id.textView8);
         cb10 = findViewById(R.id.checkBox2);
         cb11 = findViewById(R.id.checkBox);
         cb20 = findViewById(R.id.checkBox3);
@@ -50,6 +66,9 @@ public class PersonalActivity extends AppCompatActivity {
         cb70 = findViewById(R.id.checkBox13);
         cb71 = findViewById(R.id.checkBox14);
         submit_ps = findViewById(R.id.submit_ps);
+        final String csd_no = gg.getStringData(getApplicationContext(),"csd_no");
+        final String emp_id = gg.getStringData(getApplicationContext(),"idCard");
+        getPersonal(emp_id,csd_no);
 
         nav = findViewById(R.id.bottom_nav_view);
         nav.setSelectedItemId(R.id.item_2);
@@ -236,13 +255,67 @@ public class PersonalActivity extends AppCompatActivity {
     }
 
     public void getPersonal(final String emp_id,final String csd_no) {
-        String checkIdUrl = MainActivity.url+"app_get_info.php";
+        String checkIdUrl = MainActivity.url+"app_get_personal.php";
 
         StringRequest postRequest = new StringRequest(Request.Method.POST, checkIdUrl,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        dialog.dismiss();
+                        try {
+                            JSONArray res = new JSONArray(response);
+                            x1.setText(res.getJSONObject(0).getString("name"));
+                            x2.setText(res.getJSONObject(1).getString("name"));
+                            x3.setText(res.getJSONObject(2).getString("name"));
+                            x4.setText(res.getJSONObject(3).getString("name"));
+                            x5.setText(res.getJSONObject(4).getString("name"));
+                            x6.setText(res.getJSONObject(5).getString("name"));
+                            x7.setText(res.getJSONObject(6).getString("name"));
 
+                            if(res.getJSONObject(0).getString("status").equals("0")) {
+                                cb11.setChecked(true);
+                            }else if(res.getJSONObject(0).getString("status").equals("1")) {
+                                cb10.setChecked(true);
+                            }
+
+                            if(res.getJSONObject(1).getString("status").equals("0")) {
+                                cb21.setChecked(true);
+                            }else if(res.getJSONObject(1).getString("status").equals("1")) {
+                                cb20.setChecked(true);
+                            }
+
+                            if(res.getJSONObject(2).getString("status").equals("0")) {
+                                cb31.setChecked(true);
+                            }else if(res.getJSONObject(2).getString("status").equals("1")) {
+                                cb30.setChecked(true);
+                            }
+
+                            if(res.getJSONObject(3).getString("status").equals("0")) {
+                                cb41.setChecked(true);
+                            }else if(res.getJSONObject(3).getString("status").equals("1")) {
+                                cb40.setChecked(true);
+                            }
+
+                            if(res.getJSONObject(4).getString("status").equals("0")) {
+                                cb51.setChecked(true);
+                            }else if(res.getJSONObject(4).getString("status").equals("1")) {
+                                cb50.setChecked(true);
+                            }
+
+                            if(res.getJSONObject(5).getString("status").equals("0")) {
+                                cb61.setChecked(true);
+                            }else if(res.getJSONObject(5).getString("status").equals("1")) {
+                                cb60.setChecked(true);
+                            }
+
+                            if(res.getJSONObject(6).getString("status").equals("0")) {
+                                cb71.setChecked(true);
+                            }else if(res.getJSONObject(6).getString("status").equals("1")) {
+                                cb70.setChecked(true);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 },
                 new Response.ErrorListener() {

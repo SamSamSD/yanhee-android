@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
@@ -26,13 +27,18 @@ import java.util.Map;
 public class PEActivity extends AppCompatActivity {
     BottomNavigationView nav;
     SharedPreferences pref;
-    SharedPreferences.Editor editor;
     Button submit_pe;
+    ViewPager view;
+//    MyAdapter ad;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pe);
+//        setContentView(R.layout.activity_pe2);
+
+        view = (ViewPager) findViewById(R.id.activity_pe2);
+
         pref = getSharedPreferences("keb", Context.MODE_PRIVATE);
 
         final String idCard = pref.getString("idCard","");
