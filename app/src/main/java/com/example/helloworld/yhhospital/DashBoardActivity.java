@@ -146,6 +146,8 @@ public class DashBoardActivity extends AppCompatActivity {
 
     public void postCL(final int tag_id) {
         String checkIdUrl = MainActivity.url + "app_check_list.php";
+        final String idCard = gg.getStringData(this, "idCard");
+        final String csd_no = gg.getStringData(this,"csd_no");
 
         StringRequest postRequest = new StringRequest(Request.Method.POST, checkIdUrl,
                 new Response.Listener<String>() {
@@ -165,8 +167,8 @@ public class DashBoardActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-//                params.put("idCard", idCard);
-//                params.put("csd_no", csd_no_get);
+                params.put("idCard", idCard);
+                params.put("csd_no", csd_no);
                 params.put("tag_id", String.valueOf(tag_id));
                 params.put("user",gg.getStringData(getApplicationContext(),"user"));
                 return params;

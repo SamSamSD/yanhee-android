@@ -30,8 +30,11 @@ import java.util.Map;
 
 
 public class MainActivity extends AppCompatActivity {
-    public static String url = "http://172.22.1.53/YH_project/androidPHP2/";
+//    public static String url = "http://172.22.1.118/YH_project/androidPHP2/";
 //    public static String url = "http://192.168.43.142/YH_project/androidPHP2/";
+    public static String url = "http://172.22.0.79/YH_project/androidPHP2/";
+//public static String url = "http://192.168.1.47/YH_project/androidPHP2/";
+
 
     private JSONObject obj;
     EditText editPassword, editName;
@@ -63,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.i("test",response);
                         try {
                             JSONArray res = new JSONArray(response);
                             obj = res.getJSONObject(0);

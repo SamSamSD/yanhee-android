@@ -28,59 +28,63 @@ public class PEActivity extends AppCompatActivity {
     BottomNavigationView nav;
     SharedPreferences pref;
     Button submit_pe;
-    ViewPager view;
-//    MyAdapter ad;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pe);
-//        setContentView(R.layout.activity_pe2);
+        setContentView(R.layout.activity_pe2);
 
-        view = (ViewPager) findViewById(R.id.activity_pe2);
+        ViewPager view = findViewById(R.id.pagerPE);
+        view.setOffscreenPageLimit(1);
+        SwipAdapter swipAdapter = new SwipAdapter(getSupportFragmentManager());
+        view.setAdapter(swipAdapter);
+        view.setCurrentItem(0);
 
-        pref = getSharedPreferences("keb", Context.MODE_PRIVATE);
 
-        final String idCard = pref.getString("idCard","");
-        final String csd_no = pref.getString("csd_no","");
 
-        submit_pe = findViewById(R.id.submit_pe);
-        nav = findViewById(R.id.bottom_nav_view);
-        nav.setSelectedItemId(R.id.item_4);
+//        pref = getSharedPreferences("keb", Context.MODE_PRIVATE);
 
-        nav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.item_0:
-                        Intent inform0 = new Intent(PEActivity.this, DashBoardActivity.class);
-                        startActivity(inform0);
-                        return true;
-                    case R.id.item_4:
-                        return true;
-                    case R.id.item_2:
-                        Intent inform2 = new Intent(PEActivity.this, PersonalActivity.class);
-                        startActivity(inform2);
-                        return true;
-                    case R.id.item_3:
-                        Intent inform3 = new Intent(PEActivity.this, FamilyActivity.class);
-                        startActivity(inform3);
-                        return true;
-                    case R.id.item_1:
-                        Intent inform4 = new Intent(PEActivity.this, InformationActivity.class);
-                        startActivity(inform4);
-                        return true;
-                }
-                return false;
-            }
-        });
+//        final String idCard = pref.getString("idCard","");
+//        final String csd_no = pref.getString("csd_no","");
 
-        submit_pe.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                postPE(idCard, csd_no);
-            }
-        });
+//        submit_pe = findViewById(R.id.submit_pe);
+//        nav = findViewById(R.id.bottom_nav_view);
+//        nav.setSelectedItemId(R.id.item_4);
+
+//        nav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//                switch (item.getItemId()) {
+//                    case R.id.item_0:
+//                        Intent inform0 = new Intent(PEActivity.this, DashBoardActivity.class);
+//                        startActivity(inform0);
+//                        return true;
+//                    case R.id.item_4:
+//                        return true;
+//                    case R.id.item_2:
+//                        Intent inform2 = new Intent(PEActivity.this, PersonalActivity.class);
+//                        startActivity(inform2);
+//                        return true;
+//                    case R.id.item_3:
+//                        Intent inform3 = new Intent(PEActivity.this, FamilyActivity.class);
+//                        startActivity(inform3);
+//                        return true;
+//                    case R.id.item_1:
+//                        Intent inform4 = new Intent(PEActivity.this, InformationActivity.class);
+//                        startActivity(inform4);
+//                        return true;
+//                }
+//                return false;
+//            }
+//        });
+
+//        submit_pe.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                postPE(idCard, csd_no);
+//            }
+//        });
     }
 
     public void postPE(final String idCard,final String csd_no) {
@@ -119,4 +123,5 @@ public class PEActivity extends AppCompatActivity {
         };
         Volley.newRequestQueue(this).add(postRequest);
     }
+
 }

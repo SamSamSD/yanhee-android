@@ -45,6 +45,7 @@ public class HomeActivity extends AppCompatActivity implements ZXingScannerView.
     LinearLayout linearLayout;
     private ZXingScannerView zXingScannerView;
     boolean status = false;
+    private JSONObject obj;
     SharedPreferences pref;
     SharedPreferences.Editor editor;
     @Override
@@ -170,18 +171,20 @@ public class HomeActivity extends AppCompatActivity implements ZXingScannerView.
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        if(response.equals("true")) {
-                            pref = getSharedPreferences("keb", Context.MODE_PRIVATE);
-                            editor = pref.edit();
-                            editor.putString("idCard", idCard);
-                            editor.putString("csNo", String.valueOf(checkedNo));
-                            editor.commit();
-                            Intent home = new Intent(HomeActivity.this, DashBoardActivity.class);
-                            startActivity(home);
-                        } else{
-                            Toast.makeText(HomeActivity.this, "อย่าสแกนเล่นสิจ๊ะ", Toast.LENGTH_SHORT).show();
-                            Intent home = new Intent(HomeActivity.this, HomeActivity.class);
-                            startActivity(home);
+                        try {
+                            JSONArray res = new JSONArray(response);
+                            obj = res.getJSONObject(0);
+                            String status = obj.getString("status");
+                            if (status.equals("true")) {
+                                Intent home = new Intent(HomeActivity.this, DashBoardActivity.class);
+                                startActivity(home);
+                            } else {
+                                Toast.makeText(HomeActivity.this, "ไม่ถูกต้อง", Toast.LENGTH_SHORT).show();
+                                Intent home = new Intent(HomeActivity.this, HomeActivity.class);
+                                startActivity(home);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
                     }
                 },
