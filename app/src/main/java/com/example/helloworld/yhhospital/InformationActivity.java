@@ -42,6 +42,7 @@ public class InformationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.setTitle("ข้อมูลเบื้องต้น");
         setContentView(R.layout.activity_information);
 
         final String csd_no = gg.getStringData(getApplicationContext(), "csd_no");

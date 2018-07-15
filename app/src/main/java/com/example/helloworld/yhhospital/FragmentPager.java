@@ -13,12 +13,18 @@ public class FragmentPager extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         final View view;
+        String xml;
         Bundle bundle = getArguments();
         int pageNumber = bundle.getInt("pageNumber");
 
         view = inflater.inflate(R.layout.page_fragment, container, false);
-        TextView textView = view.findViewById(R.id.pageNumber);
-        textView.setText(Integer.toString(pageNumber));
+
+//        TextView textView = view.findViewById(R.id.pageNumber);
+//        textView.setText(Integer.toString(pageNumber));
+
         return view;
+    }
+    public void setXML(String x){
+
     }
 }

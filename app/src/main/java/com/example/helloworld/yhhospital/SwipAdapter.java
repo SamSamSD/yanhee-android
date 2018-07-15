@@ -13,6 +13,18 @@ public class SwipAdapter extends FragmentStatePagerAdapter{
 
     @Override
     public Fragment getItem(int position) {
+        switch (position){
+            case 0:
+                return new FragmentOne();
+            case 1:
+                return new FragmentTwo();
+            case 2:
+                return new FragmentThree();
+
+                case 3:
+                return new FragementFour();
+
+        }
         Fragment pageFragment = new FragmentPager();
         Bundle bundle = new Bundle();
         bundle.putInt("pageNumber", position + 1);
@@ -22,6 +34,6 @@ public class SwipAdapter extends FragmentStatePagerAdapter{
 
     @Override
     public int getCount() {
-        return 4;
+        return 3;
     }
 }

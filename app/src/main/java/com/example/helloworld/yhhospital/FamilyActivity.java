@@ -42,6 +42,8 @@ public class FamilyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_family);
+        this.setTitle("ข้อมูลครอบครัว");
+
         dialog = ProgressDialog.show(FamilyActivity.this, null,"Loading...", false,true);
         final String csd_no = gg.getStringData(getApplicationContext(), "csd_no");
         final String emp_id = gg.getStringData(getApplicationContext(),"idCard");

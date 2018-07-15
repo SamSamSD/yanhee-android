@@ -43,6 +43,8 @@ public class PersonalActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal);
+        this.setTitle("ข้อมูลส่วนตัว");
+
         dialog = ProgressDialog.show(PersonalActivity.this, null,"Loading...", false,true);
         x1 = findViewById(R.id.textView2);
         x2 = findViewById(R.id.textView3);

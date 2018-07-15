@@ -45,6 +45,7 @@ public class DashBoardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+        this.setTitle("หน้าหลัก");
         dialog = ProgressDialog.show(DashBoardActivity.this, null,"Loading...", false,true);
         textView1 = findViewById(R.id.show_employee);
         textView2 = findViewById(R.id.show_employee2);

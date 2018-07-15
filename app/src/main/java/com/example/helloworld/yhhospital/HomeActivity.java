@@ -52,6 +52,7 @@ public class HomeActivity extends AppCompatActivity implements ZXingScannerView.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        this.setTitle("สถานที่ตรวจ");
         btn = findViewById(R.id.scan);
         linearLayout = findViewById(R.id.linearLayout2);
         getCheckService();

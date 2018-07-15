@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -30,12 +32,12 @@ import java.util.Map;
 
 
 public class MainActivity extends AppCompatActivity {
-//    public static String url = "http://172.22.1.118/YH_project/androidPHP2/";
 //    public static String url = "http://192.168.43.142/YH_project/androidPHP2/";
-    public static String url = "http://172.22.0.79/YH_project/androidPHP2/";
-//public static String url = "http://192.168.1.47/YH_project/androidPHP2/";
-
-
+//    public static String url = "http://172.22.0.79/YH_project/androidPHP2/";
+    public static String url = "http://192.168.1.47/YH_project/androidPHP2/";
+    private static final int REQUEST_CAMERA = 0;
+    private static final int REQUEST_CONTACTS = 1;
+    private View mLayout;
     private JSONObject obj;
     EditText editPassword, editName;
     Button btnSignIn;
@@ -47,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
+        this.setTitle("โรงพยาบาลยันฮี");
         editName=(EditText)findViewById(R.id.editName);
         editPassword=(EditText)findViewById(R.id.editPassword);
         btnSignIn=(Button)findViewById(R.id.btnSignIn);
@@ -110,5 +112,33 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         Volley.newRequestQueue(this).add(postRequest);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+
+        if (requestCode == REQUEST_CAMERA) {
+            Log.i("eiei", "Received response for Camera permission request.");
+            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Snackbar.make(mLayout, "CAMERA permission has now been granted. Showing preview.", Snackbar.LENGTH_SHORT).show();
+            } else {
+                Snackbar.make(mLayout, "CAMERA permission was NOT granted.", Snackbar.LENGTH_SHORT).show();
+            }
+
+        } else if (requestCode == REQUEST_CONTACTS) {
+            Log.i("eiei", "Received response for contact permissions request.");
+//            if (PermissionUtil) {
+//                Snackbar.make(mLayout, "permision_available_contacts", Snackbar.LENGTH_SHORT).show();
+//            } else {
+//                Log.i("eiei", "Contacts permissions were NOT granted.");
+//                Snackbar.make(mLayout, "permissions_not_granted",
+//                        Snackbar.LENGTH_SHORT)
+//                        .show();
+//            }
+
+        } else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
     }
 }
