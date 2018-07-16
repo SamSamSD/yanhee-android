@@ -20,9 +20,9 @@ public class SwipAdapter extends FragmentStatePagerAdapter{
                 return new FragmentTwo();
             case 2:
                 return new FragmentThree();
-
-                case 3:
+            case 3:
                 return new FragementFour();
+
 
         }
         Fragment pageFragment = new FragmentPager();

@@ -32,9 +32,9 @@ import java.util.Map;
 
 
 public class MainActivity extends AppCompatActivity {
-//    public static String url = "http://192.168.43.142/YH_project/androidPHP2/";
+    public static String url = "http://172.22.1.199/YH_project/androidPHP2/";
 //    public static String url = "http://172.22.0.79/YH_project/androidPHP2/";
-    public static String url = "http://192.168.1.47/YH_project/androidPHP2/";
+//    public static String url = "http://192.168.1.47/YH_project/androidPHP2/";
     private static final int REQUEST_CAMERA = 0;
     private static final int REQUEST_CONTACTS = 1;
     private View mLayout;
