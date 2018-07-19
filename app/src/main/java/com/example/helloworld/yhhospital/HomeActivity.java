@@ -120,17 +120,6 @@ public class HomeActivity extends AppCompatActivity implements ZXingScannerView.
                                     @Override
                                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                                         for (int j=0; j<length; j++) {
-//                                            Log.i("cs_no", String.valueOf(buttons[j].getId()));
-//                                            Log.i("gg",gg.getStringData(getApplicationContext(),"csNo"));
-//                                            if (gg.getStringData(getApplicationContext(), "csNo").equals(String.valueOf(buttons[j].getId()))) {
-//                                                Log.i("test","1234");
-//                                                buttons[j].setChecked(true);
-//                                            }
-//                                            else {
-//                                                buttons[j].setChecked(false);
-//                                            }
-//                                            String csNoPref = gg.getStringData(getApplicationContext(), "csNo");
-//                                            int test = buttons[j].getId();
                                             buttons[j].setChecked(false);
                                         }
                                         if(isChecked == true) {
@@ -179,7 +168,8 @@ public class HomeActivity extends AppCompatActivity implements ZXingScannerView.
                             if (status.equals("true")) {
                                 Intent home = new Intent(HomeActivity.this, DashBoardActivity.class);
                                 startActivity(home);
-                            } else {
+                            }
+                            if(status.equals("false")) {
                                 Toast.makeText(HomeActivity.this, "ไม่ถูกต้อง", Toast.LENGTH_SHORT).show();
                                 Intent home = new Intent(HomeActivity.this, HomeActivity.class);
                                 startActivity(home);
@@ -200,8 +190,8 @@ public class HomeActivity extends AppCompatActivity implements ZXingScannerView.
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put("idCard", idCard);
-                params.put("csNo", String.valueOf(checkedNo));
+                    params.put("idCard", idCard);
+                    params.put("csNo", String.valueOf(checkedNo));
                 return params;
             }
 

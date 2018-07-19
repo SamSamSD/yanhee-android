@@ -3,6 +3,7 @@ package com.example.helloworld.yhhospital;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -30,7 +32,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FamilyActivity extends AppCompatActivity {
-    CheckBox cb10, cb11, cb20, cb21, cb30, cb31, cb40, cb41, cb50, cb51;
+    private Button cb10, cb11, cb20, cb21, cb30, cb31, cb40, cb41, cb50, cb51;
     private TextView x1,x2,x3,x4,x5;
     Button submit_family;
     ProgressDialog dialog;
@@ -47,21 +49,21 @@ public class FamilyActivity extends AppCompatActivity {
         dialog = ProgressDialog.show(FamilyActivity.this, null,"Loading...", false,true);
         final String csd_no = gg.getStringData(getApplicationContext(), "csd_no");
         final String emp_id = gg.getStringData(getApplicationContext(),"idCard");
-        x1 = findViewById(R.id.textView12);
-        x2 = findViewById(R.id.textView13);
-        x3 = findViewById(R.id.textView14);
-        x4 = findViewById(R.id.textView15);
-        x5 = findViewById(R.id.textView16);
-        cb10 = findViewById(R.id.checkBox15);
-        cb11 = findViewById(R.id.checkBox16);
-        cb20 = findViewById(R.id.checkBox17);
-        cb21 = findViewById(R.id.checkBox18);
-        cb30 = findViewById(R.id.checkBox19);
-        cb31 = findViewById(R.id.checkBox20);
-        cb40 = findViewById(R.id.checkBox21);
-        cb41 = findViewById(R.id.checkBox22);
-        cb50 = findViewById(R.id.checkBox23);
-        cb51 = findViewById(R.id.checkBox24);
+        x1 = findViewById(R.id.textView112);
+        x2 = findViewById(R.id.textView113);
+        x3 = findViewById(R.id.textView114);
+        x4 = findViewById(R.id.textView115);
+        x5 = findViewById(R.id.textView116);
+        cb10 = findViewById(R.id.btn11);
+        cb11 = findViewById(R.id.btn12);
+        cb20 = findViewById(R.id.btn13);
+        cb21 = findViewById(R.id.btn14);
+        cb30 = findViewById(R.id.btn15);
+        cb31 = findViewById(R.id.btn16);
+        cb40 = findViewById(R.id.btn17);
+        cb41 = findViewById(R.id.btn18);
+        cb50 = findViewById(R.id.btn19);
+        cb51 = findViewById(R.id.btn110);
         submit_family = findViewById(R.id.submit_family);
         getFamily(emp_id,csd_no);
 
@@ -107,104 +109,90 @@ public class FamilyActivity extends AppCompatActivity {
 
     public void handleButton() {
 
-        cb10.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        cb10.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    cb11.setChecked(false);
-                    cb11.setSelected(false);
-                    family_checked[0] = "1";
-                }
+            public void onClick(View v) {
+                family_checked[0] = "1";
+                cb10.setBackgroundColor(Color.rgb(255, 77, 77));
+                cb11.setBackgroundColor(android.R.drawable.btn_default);
             }
         });
-        cb11.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+        cb11.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    cb10.setChecked(false);
-                    cb10.setSelected(false);
-                    family_checked[0] = "0";
-                }
+            public void onClick(View v) {
+                family_checked[0] = "0";
+                cb11.setBackgroundColor(Color.rgb(0,255,153));
+                cb10.setBackgroundColor(android.R.drawable.btn_default);
             }
         });
-        cb20.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        cb20.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    cb21.setChecked(false);
-                    cb21.setSelected(false);
-                    family_checked[1] = "1";
-                }
+            public void onClick(View v) {
+                family_checked[1] = "1";
+                cb20.setBackgroundColor(Color.rgb(255, 77, 77));
+                cb21.setBackgroundColor(android.R.drawable.btn_default);
             }
         });
-        cb21.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+        cb21.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    cb20.setChecked(false);
-                    cb20.setSelected(false);
-                    family_checked[1] = "0";
-                }
+            public void onClick(View v) {
+                family_checked[1] = "0";
+                cb21.setBackgroundColor(Color.rgb(0,255,153));
+                cb20.setBackgroundColor(android.R.drawable.btn_default);
             }
         });
-        cb30.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        cb30.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    cb31.setChecked(false);
-                    cb31.setSelected(false);
-                    family_checked[2] = "1";
-                }
+            public void onClick(View v) {
+                family_checked[2] = "1";
+                cb30.setBackgroundColor(Color.rgb(255, 77, 77));
+                cb31.setBackgroundColor(android.R.drawable.btn_default);
             }
         });
-        cb31.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+        cb31.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    cb30.setChecked(false);
-                    cb30.setSelected(false);
-                    family_checked[2] = "0";
-                }
+            public void onClick(View v) {
+                family_checked[2] = "0";
+                cb31.setBackgroundColor(Color.rgb(0,255,153));
+                cb30.setBackgroundColor(android.R.drawable.btn_default);
             }
         });
-        cb40.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        cb40.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    cb41.setChecked(false);
-                    cb41.setSelected(false);
-                    family_checked[3] = "1";
-                }
+            public void onClick(View v) {
+                family_checked[3] = "1";
+                cb40.setBackgroundColor(Color.rgb(255, 77, 77));
+                cb41.setBackgroundColor(android.R.drawable.btn_default);
             }
         });
-        cb41.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+        cb41.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    cb40.setChecked(false);
-                    cb40.setSelected(false);
-                    family_checked[3] = "0";
-                }
+            public void onClick(View v) {
+                family_checked[3] = "0";
+                cb41.setBackgroundColor(Color.rgb(0,255,153));
+                cb40.setBackgroundColor(android.R.drawable.btn_default);
             }
         });
-        cb50.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+        cb50.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    cb51.setChecked(false);
-                    cb51.setSelected(false);
-                    family_checked[4] = "1";
-                }
+            public void onClick(View v) {
+                family_checked[4] = "1";
+                cb50.setBackgroundColor(Color.rgb(255, 77, 77));
+                cb51.setBackgroundColor(android.R.drawable.btn_default);
             }
         });
-        cb51.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+        cb51.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    cb50.setChecked(false);
-                    cb50.setSelected(false);
-                    family_checked[4] = "0";
-                }
+            public void onClick(View v) {
+                family_checked[4] = "0";
+                cb51.setBackgroundColor(Color.rgb(0,255,153));
+                cb50.setBackgroundColor(android.R.drawable.btn_default);
             }
         });
     }
@@ -226,33 +214,33 @@ public class FamilyActivity extends AppCompatActivity {
                             x5.setText(res.getJSONObject(4).getString("name"));
 
                             if(res.getJSONObject(0).getString("status").equals("0")) {
-                                cb11.setChecked(true);
+                                cb11.setBackgroundColor(Color.rgb(0,255,153));
                             }else if(res.getJSONObject(0).getString("status").equals("1")) {
-                                cb10.setChecked(true);
+                                cb10.setBackgroundColor(Color.rgb(255, 77, 77));
                             }
 
                             if(res.getJSONObject(1).getString("status").equals("0")) {
-                                cb21.setChecked(true);
+                                cb21.setBackgroundColor(Color.rgb(0,255,153));
                             }else if(res.getJSONObject(1).getString("status").equals("1")) {
-                                cb20.setChecked(true);
+                                cb20.setBackgroundColor(Color.rgb(255, 77, 77));
                             }
 
                             if(res.getJSONObject(2).getString("status").equals("0")) {
-                                cb31.setChecked(true);
+                                cb31.setBackgroundColor(Color.rgb(0,255,153));
                             }else if(res.getJSONObject(2).getString("status").equals("1")) {
-                                cb30.setChecked(true);
+                                cb30.setBackgroundColor(Color.rgb(255, 77, 77));
                             }
 
                             if(res.getJSONObject(3).getString("status").equals("0")) {
-                                cb41.setChecked(true);
+                                cb41.setBackgroundColor(Color.rgb(0,255,153));
                             }else if(res.getJSONObject(3).getString("status").equals("1")) {
-                                cb40.setChecked(true);
+                                cb40.setBackgroundColor(Color.rgb(255, 77, 77));
                             }
 
                             if(res.getJSONObject(4).getString("status").equals("0")) {
-                                cb51.setChecked(true);
+                                cb51.setBackgroundColor(Color.rgb(0,255,153));
                             }else if(res.getJSONObject(4).getString("status").equals("1")) {
-                                cb50.setChecked(true);
+                                cb50.setBackgroundColor(Color.rgb(255, 77, 77));
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

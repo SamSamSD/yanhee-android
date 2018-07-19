@@ -18,10 +18,10 @@ public class SwipAdapter extends FragmentStatePagerAdapter{
                 return new FragmentOne();
             case 1:
                 return new FragmentTwo();
-            case 2:
-                return new FragmentThree();
-            case 3:
-                return new FragementFour();
+//            case 2:
+//                return new FragmentThree();
+//            case 3:
+//                return new FragementFour();
 
 
         }
@@ -34,6 +34,6 @@ public class SwipAdapter extends FragmentStatePagerAdapter{
 
     @Override
     public int getCount() {
-        return 3;
+        return 2;
     }
 }

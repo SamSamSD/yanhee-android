@@ -228,14 +228,14 @@ public class DashBoardActivity extends AppCompatActivity {
                                 la.addView(b);
                                 buttons[i] = b;
                                 if (status1 == 1){
-                                    b.setBackgroundColor(Color.rgb(0,255,0));
+                                    b.setBackgroundColor(Color.rgb(153, 255, 153));
                                 }
 
                                 b.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
                                         if (name.equals(gg.getStringData(getApplicationContext(),"tag"))){
-                                            v.setBackgroundColor(Color.rgb(0,255,0));
+                                            v.setBackgroundColor(Color.rgb(153, 255, 153));
                                             postCL(v.getId());
                                         }
                                         else {
