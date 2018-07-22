@@ -260,44 +260,58 @@ public class PersonalActivity extends AppCompatActivity {
 
                            if(res.getJSONObject(0).getString("status").equals("0")) {
                                 cb11.setBackgroundColor(Color.rgb(0,255,153));
+                               ps_checked[0] = "0";
                             }else if(res.getJSONObject(0).getString("status").equals("1")) {
                                 cb10.setBackgroundColor(Color.rgb(255, 77, 77));
+                               ps_checked[0] = "1";
                             }
 
                             if(res.getJSONObject(1).getString("status").equals("0")) {
                                 cb21.setBackgroundColor(Color.rgb(0,255,153));
+                                ps_checked[1] = "0";
                             }else if(res.getJSONObject(1).getString("status").equals("1")) {
                                 cb20.setBackgroundColor(Color.rgb(255, 77, 77));
+                                ps_checked[1] = "1";
                             }
 
                             if(res.getJSONObject(2).getString("status").equals("0")) {
                                 cb31.setBackgroundColor(Color.rgb(0,255,153));
+                                ps_checked[2] = "0";
                             }else if(res.getJSONObject(2).getString("status").equals("1")) {
                                 cb30.setBackgroundColor(Color.rgb(255, 77, 77));
+                                ps_checked[2] = "1";
                             }
 
                             if(res.getJSONObject(3).getString("status").equals("0")) {
                                 cb41.setBackgroundColor(Color.rgb(0,255,153));
+                                ps_checked[3] = "0";
                             }else if(res.getJSONObject(3).getString("status").equals("1")) {
                                 cb40.setBackgroundColor(Color.rgb(255, 77, 77));
+                                ps_checked[3] = "1";
                             }
 
                             if(res.getJSONObject(4).getString("status").equals("0")) {
                                 cb51.setBackgroundColor(Color.rgb(0,255,153));
+                                ps_checked[4] = "0";
                             }else if(res.getJSONObject(4).getString("status").equals("1")) {
                                 cb50.setBackgroundColor(Color.rgb(255, 77, 77));
+                                ps_checked[4] = "1";
                             }
 
                             if(res.getJSONObject(5).getString("status").equals("0")) {
                                 cb61.setBackgroundColor(Color.rgb(0,255,153));
+                                ps_checked[5] = "0";
                             }else if(res.getJSONObject(5).getString("status").equals("1")) {
                                 cb60.setBackgroundColor(Color.rgb(255, 77, 77));
+                                ps_checked[5] = "1";
                             }
 
                             if(res.getJSONObject(6).getString("status").equals("0")) {
                                 cb71.setBackgroundColor(Color.rgb(0,255,153));
+                                ps_checked[6] = "0";
                             }else if(res.getJSONObject(6).getString("status").equals("1")) {
                                 cb70.setBackgroundColor(Color.rgb(255, 77, 77));
+                                ps_checked[6] = "1";
                             }
 
                         } catch (JSONException e) {

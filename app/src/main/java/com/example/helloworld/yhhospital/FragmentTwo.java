@@ -98,7 +98,7 @@ public class FragmentTwo extends Fragment{
             public void onClick(View v) {
                 gg.setStringData(getActivity(),"pe7","0");
                 cb11.setBackgroundColor(Color.rgb(0, 255, 153));
-                cb11.setBackgroundColor(android.R.drawable.btn_default);
+                cb10.setBackgroundColor(android.R.drawable.btn_default);
             }
         });
 
@@ -194,32 +194,42 @@ public class FragmentTwo extends Fragment{
 
                             if(res.getJSONObject(6).getString("status").equals("0")) {
                                 cb11.setBackgroundColor(Color.rgb(0,255,153));
+                                gg.setStringData(getActivity(),"pe7","0");
                             }else if(res.getJSONObject(6).getString("status").equals("1")) {
                                 cb10.setBackgroundColor(Color.rgb(255, 77, 77));
+                                gg.setStringData(getActivity(),"pe7","1");
                             }
 
                             if(res.getJSONObject(7).getString("status").equals("0")) {
                                 cb21.setBackgroundColor(Color.rgb(0,255,153));
+                                gg.setStringData(getActivity(),"pe8","0");
                             }else if(res.getJSONObject(7).getString("status").equals("1")) {
                                 cb20.setBackgroundColor(Color.rgb(255, 77, 77));
+                                gg.setStringData(getActivity(),"pe8","1");
                             }
 
                             if(res.getJSONObject(8).getString("status").equals("0")) {
                                 cb31.setBackgroundColor(Color.rgb(0,255,153));
+                                gg.setStringData(getActivity(),"pe9","0");
                             }else if(res.getJSONObject(8).getString("status").equals("1")) {
                                 cb30.setBackgroundColor(Color.rgb(255, 77, 77));
+                                gg.setStringData(getActivity(),"pe9","1");
                             }
 
                             if(res.getJSONObject(9).getString("status").equals("0")) {
                                 cb41.setBackgroundColor(Color.rgb(0,255,153));
+                                gg.setStringData(getActivity(),"pe10","0");
                             }else if(res.getJSONObject(9).getString("status").equals("1")) {
                                 cb40.setBackgroundColor(Color.rgb(255, 77, 77));
+                                gg.setStringData(getActivity(),"pe10","1");
                             }
 
                             if(res.getJSONObject(10).getString("status").equals("0")) {
                                 cb51.setBackgroundColor(Color.rgb(0,255,153));
+                                gg.setStringData(getActivity(),"pe11","0");
                             }else if(res.getJSONObject(10).getString("status").equals("1")) {
                                 cb50.setBackgroundColor(Color.rgb(255, 77, 77));
+                                gg.setStringData(getActivity(),"pe11","1");
                             }
 
                         } catch (JSONException e) {

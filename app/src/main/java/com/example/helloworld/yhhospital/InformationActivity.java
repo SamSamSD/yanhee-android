@@ -57,7 +57,7 @@ public class InformationActivity extends AppCompatActivity {
         edittextBp = findViewById(R.id.edittextBp);
         edittextBp2 = findViewById(R.id.edittextBp2);
         btn_submit_info = findViewById(R.id.btn_submit_info);
-        edittextBp2.setFocusable(false);
+//        edittextBp2.setFocusable(false);
         getInfo(emp_id, csd_no);
 
         btn_submit_info.setOnClickListener(new View.OnClickListener() {

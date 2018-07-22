@@ -46,8 +46,7 @@ public class HomeActivity extends AppCompatActivity implements ZXingScannerView.
     private ZXingScannerView zXingScannerView;
     boolean status = false;
     private JSONObject obj;
-    SharedPreferences pref;
-    SharedPreferences.Editor editor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,7 +87,7 @@ public class HomeActivity extends AppCompatActivity implements ZXingScannerView.
         tv.setText("เลือกสถานที่ตรวจ");
         linearLayout.addView(tv);
 
-        StringRequest postRequest = new StringRequest(Request.Method.GET, url1,
+        StringRequest postRequest = new StringRequest(Request.Method.POST, url1,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -156,6 +155,7 @@ public class HomeActivity extends AppCompatActivity implements ZXingScannerView.
 
     public void postCheckId(final String idCard) {
         String checkIdUrl = MainActivity.url+"app_check_idcard.php";
+        gg.setStringData(getApplicationContext(),"idCard", idCard);
 
         StringRequest postRequest = new StringRequest(Request.Method.POST, checkIdUrl,
                 new Response.Listener<String>() {

@@ -215,32 +215,42 @@ public class FamilyActivity extends AppCompatActivity {
 
                             if(res.getJSONObject(0).getString("status").equals("0")) {
                                 cb11.setBackgroundColor(Color.rgb(0,255,153));
+                                family_checked[0] = "0";
                             }else if(res.getJSONObject(0).getString("status").equals("1")) {
                                 cb10.setBackgroundColor(Color.rgb(255, 77, 77));
+                                family_checked[0] = "1";
                             }
 
                             if(res.getJSONObject(1).getString("status").equals("0")) {
                                 cb21.setBackgroundColor(Color.rgb(0,255,153));
+                                family_checked[1] = "0";
                             }else if(res.getJSONObject(1).getString("status").equals("1")) {
                                 cb20.setBackgroundColor(Color.rgb(255, 77, 77));
+                                family_checked[1] = "1";
                             }
 
                             if(res.getJSONObject(2).getString("status").equals("0")) {
                                 cb31.setBackgroundColor(Color.rgb(0,255,153));
+                                family_checked[2] = "0";
                             }else if(res.getJSONObject(2).getString("status").equals("1")) {
                                 cb30.setBackgroundColor(Color.rgb(255, 77, 77));
+                                family_checked[2] = "1";
                             }
 
                             if(res.getJSONObject(3).getString("status").equals("0")) {
                                 cb41.setBackgroundColor(Color.rgb(0,255,153));
+                                family_checked[3] = "0";
                             }else if(res.getJSONObject(3).getString("status").equals("1")) {
                                 cb40.setBackgroundColor(Color.rgb(255, 77, 77));
+                                family_checked[3] = "1";
                             }
 
                             if(res.getJSONObject(4).getString("status").equals("0")) {
                                 cb51.setBackgroundColor(Color.rgb(0,255,153));
+                                family_checked[4] = "0";
                             }else if(res.getJSONObject(4).getString("status").equals("1")) {
                                 cb50.setBackgroundColor(Color.rgb(255, 77, 77));
+                                family_checked[4] = "1";
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -282,6 +292,7 @@ public class FamilyActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        Log.i("family",response);
                         Intent inform = new Intent(FamilyActivity.this, DashBoardActivity.class);
                         inform.putExtra("response", response);
                         startActivity(inform);

@@ -55,8 +55,8 @@ public class DashBoardActivity extends AppCompatActivity {
 
         pref = getSharedPreferences(name, Context.MODE_PRIVATE);
 
-        final String idCard = pref.getString("idCard", "");
-        final String csNo = pref.getString("csNo", "");
+        final String idCard = gg.getStringData(getApplicationContext(),"idCard");
+        final String csNo = gg.getStringData(getApplicationContext(),"csNo");
         //postDashBoard จะได้ค่า csd_no มาแล้วเก็บลง sharePref
         postDashBoard(idCard, csNo);
 
@@ -93,6 +93,8 @@ public class DashBoardActivity extends AppCompatActivity {
 
     public void postDashBoard(final String idCard, final String csNo) {
         String checkIdUrl = MainActivity.url + "app_dashboard1.php";
+        Log.i("emp_id",idCard);
+        Log.i("cs_no",csNo);
         StringRequest postRequest = new StringRequest(Request.Method.POST, checkIdUrl,
                 new Response.Listener<String>() {
                     @Override
